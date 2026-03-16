@@ -1,0 +1,61 @@
+This chapter introduces the theoretical fundamentals underlying this research. Although these concepts will be presented with an introductory approach, a basic understanding of Machine Learning and Neural Networks is expected. Therefore, this section will cover Musical Computation, FM Synthesis, Fourier Transform, and Convolutional Neural Networks.
+
+\section{Musical Computation}
+
+Musical computation is a broad and interdisciplinary field that encompasses all aspects of musical processing through a computer. It is beyond the scope of this thesis to provide a comprehensive overview of this field; however, for the purposes of this study, it is important to cover the basic elements of sound and the fundamentals of audio digitization.
+
+\subsection{Sound elements}
+
+Audio is a mechanical compression wave that travels through the air. This type of wave can be converted into an electrical signal through microphones, which consist of an arrangement of coils and magnets. As a wave, its main elements are:
+
+\begin{itemize}
+\item Pitch: The fundamental frequency of a sound, which determines whether it is low or high. The higher the frequency, the higher the pitch.
+\item Duration: The length of time a sound is sustained and can be heard.
+\item Loudness (or amplitude): The intensity or energy level of a sound. In terms of a wave, it corresponds to the amplitude of the sound wave.
+\end{itemize}
+
+There are other relevant concepts that could be discussed; however, for the sake of simplicity (and because this thesis focuses on Machine Learning), only these will be mentioned.
+
+\subsection{Audio digitalization}
+
+A microphone converts a pressure wave into an electrical waveform. However, in computational music, the audio signal must be discretized to be represented as a digital audio file. The primary process for digital audio representation is sampling.
+
+Sampling consists of recording a sequence of wave amplitudes at fixed intervals. For example, if a sound is recorded using a sampling rate of 22,100 Hz, it means that the computer will capture 22,100 audio samples per second.
+
+\begin{figure}[htb]
+ \caption{Signal sampling}
+ \label{fig:signal_sampling}
+ \centering
+ \includegraphics[scale=0.2]{images/signal_sampling.png}
+ \fdireta{usp:logo}
+\end{figure}
+
+This approach is very efficient because human hearing can detect frequencies between 20 Hz and 20,000 Hz. However, for most musical sounds, the maximum frequency is typically below 10 kHz (in fact, even a violin—one of the highest-pitched instruments—reaches only around 3,500 Hz). And according to the Nyquist-Shannon Theorem, to properly sample a periodic signal, the sampling rate must be at least twice the frequency of the highest component of the signal.
+
+Thus, 22,100 Hz can be a good sampling rate for recording music while saving disk space. However, if the goal is to cover the full range of human hearing, higher rates, such as 44,200 Hz, can also be used.
+
+Note that with this process, all sound elements highlighted before, can be recorded and reprocedure later.
+
+\section{FM Synthesis}
+
+\section{Fourier Transform}
+
+\section{1D Convolutional Neural Networks}
+
+
+
+\subsection{History and motivation}
+
+Convolutional Neural Networks (CNNs) originated in the 1990s with the introduction of the "LeNet" model. Since their inception, CNNs have demonstrated remarkable results in classification tasks.
+
+Although this type of neural network went through a period of relative stagnation—due to the rise of alternative machine learning paradigms such as Support Vector Machines and Bayesian Networks—CNNs eventually became the de facto standard for computer vision problems, including object detection, image classification, and other image-based machine learning challenges.
+
+The significant breakthrough in the use of CNNs can be attributed to two main factors: (1) the simplicity with which CNNs handle input data, such as images; and (2) the efficient use of computational resources during training.
+
+Regarding simplicity, since the advent of CNNs, many image-based machine learning tasks no longer require extensive pre-processing before applying learning algorithms to solve the target problem.
+
+For example, consider the problem of bird species classification based on images. In such a task, it is easy to observe that for many species, simple color patterns (e.g., on the bird's plumage) may be sufficient for identification. For other species, the analysis of connected components in the image—such as textures and visual patterns—can play a crucial role. Furthermore, in other cases, the frequency of color variations across the image may serve as a key classification feature.
+
+Therefore, different filters are required to detect distinct properties in the images, making it possible to apply machine learning techniques—such as decision trees—for effective image classification.
+
+In addition, several other important factors must be considered to improve classification performance, including image rotation, scale variation, translation, lighting conditions, and more.
