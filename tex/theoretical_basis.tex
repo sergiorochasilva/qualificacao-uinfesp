@@ -196,19 +196,71 @@ For a better understanding of this conversion, consider the following graph, whi
 
 It is a very useful metric for audio comparison, as it takes into account the human auditory perception of frequency.
 
+\section{Artificial Neural Networks and Learning}
+
+\subsection{From algorithmic programming to learning}
+
+Traditional programming is effective when a task can be explicitly described as a sequence of rules. However, many real-world problems (such as recognizing faces, transcribing speech, or identifying musical patterns) do not admit a complete and reliable rule-based specification. In such cases, a data-driven approach is required, where the system improves its performance by observing examples rather than executing a fixed set of rules.
+
+\subsection{Learning as performance improvement}
+
+In artifical inteligence, learning is commonly formalized as performance improvement through experience. A program is said to learn from experience \( E \) with respect to a task \( T \) and a performance measure \( P \) if its performance on \( T \), as measured by \( P \), improves with \( E \) \cite{mitchell1997_machine_learning}. This definition shifts the focus from explicit algorithms to measurable improvement driven by data.
+
+\subsection{Artificial neuron model}
+
+The earliest models of artificial neurons were inspired by biological neurons, beginning with the work of McCulloch and Pitts \cite{mcculloch1943}. The perceptron later provided a practical learning rule for this model \cite{rosenblatt1958}. Mathematically, a neuron computes a weighted sum of its inputs and applies a non-linear activation function:
+
+\[
+y = \phi\left(\sum_{i=1}^{n} w_i x_i + b\right)
+\]
+
+where \( x_i \) are inputs, \( w_i \) are trainable weights, \( b \) is a bias term, and \( \phi(\cdot) \) is the activation function.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{../images/nn_artifical_neuron.png}
+    \caption{Basic structure of an artificial neuron.}
+    \label{fig:nn_artificial_neuron}
+    \fdireta{goodfellow2025_deep_learning}
+\end{figure}
+
+By combining multiple neurons into layered structures, neural networks can represent complex non-linear functions. Classical results show that networks with at least one hidden layer can approximate a broad class of continuous functions, under mild conditions on the activation function \cite{cybenko1989,hornik1991}.
+
+\subsection{Training as optimization}
+
+Training a neural network consists of choosing parameters that minimize a loss function over a dataset. A common choice for regression is the Mean Squared Error (MSE):
+
+\[
+\mathcal{L}_{\text{MSE}} = \frac{1}{N} \sum_{i=1}^{N} \left(y_i - \hat{y}_i\right)^2
+\]
+
+Optimization is typically performed with gradient-based methods. In its simplest form, gradient descent updates the parameters \( \theta \) by moving in the direction of steepest decrease:
+
+\[
+\theta_{t+1} = \theta_t - \eta \nabla_{\theta} \mathcal{L}
+\]
+
+where \( \eta \) is the learning rate. The computation of gradients in deep networks is made efficient by backpropagation, which applies the chain rule to propagate error signals through the layers \cite{rumelhart1986,goodfellow2016_deep_learning}. For an individual weight \( w_i \), the update takes the form:
+
+\[
+w_i \leftarrow w_i - \eta \frac{\partial \mathcal{L}}{\partial w_i}
+\]
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\linewidth]{../images/nn_gradient_intuition.png}
+    \caption{Intuition for gradient descent as iterative minimization of a loss function.}
+    \label{fig:nn_gradient_descent}
+    \fdireta{goodfellow2025_deep_learning}
+\end{figure}
+
 \section{1D Convolutional Neural Networks}
 
 \subsection{History and motivation}
 
-Convolutional Neural Networks (CNNs) originated in the 1990s with the introduction of the "LeNet" model. Since their inception, CNNs have demonstrated remarkable results in classification tasks \cite{lecun1998_gradient}.
+Convolutional Neural Networks (CNNs) emerged in the 1990s with the "LeNet" model and later became the dominant approach for vision tasks \cite{lecun1998_gradient}. Their success is largely due to local connectivity and parameter sharing, which allow models to learn discriminative features directly from raw inputs while keeping the number of parameters manageable. This section summarizes the core CNN operations and then extends the discussion to one-dimensional signals.
 
-Although this type of neural network went through a period of relative stagnation (due to the rise of alternative machine learning paradigms such as Support Vector Machines and Bayesian Networks) CNNs eventually became the mainly standard for computer vision problems, including object detection, image classification, and other image-based machine learning challenges \cite{lecun1998_gradient}.
-
-The significant breakthrough in the use of CNNs can be attributed to two main factors: (1) the simplicity with which CNNs handle input data, such as images; and (2) the efficient use of computational resources during training.
-
-Regarding simplicity, since the advent of CNNs, many image-based machine learning tasks no longer require extensive pre-processing before applying learning algorithms to solve the target problem.
-
-For example, consider the problem of bird species classification based on images. In such a task, it is easy to observe that for many species, simple color patterns (e.g., on the bird's plumage) may be sufficient for identification. For other species, the analysis of connected components in the image (such as textures and visual patterns) can play a crucial role. Furthermore, in other cases, the frequency of color variations across the image may serve as a key classification feature. These observations motivate architectures that can learn local patterns while remaining robust to small spatial variations, which is the role of the convolutional and pooling operations discussed next.
+Before CNNs, image classification typically required handcrafted pre-processing. For instance, in bird species identification, one would manually design feature extractors to capture color patterns, connected components, textures, or local intensity variations, and only then apply a classifier (e.g., a decision tree) on those engineered features. This pipeline was brittle under changes in scale, illumination, or viewpoint. CNNs remove much of this burden by learning the filters and invariant representations directly from data, integrating feature extraction into the training process.
 
 \subsection{Convolutional filters and feature maps}
 

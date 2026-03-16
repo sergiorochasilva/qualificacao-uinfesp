@@ -1,123 +1,264 @@
----
+Redes neurais - para que servem?
 
-Por que as CNNs fizeram tanto sucesso?
-Superando o pré-processamento
-Com suas origens nos anos 90 (KIRANYAZ et al., 2021), as redes neurais convolucionais se tornaram um padrão inequívoco em problemas de visão computacional, classificação, identificação de objetos, ou qualquer outro que envolva o aprendizado máquina a partir de imagens.
-O "grande boom" desse tipo de rede se deu por conta do fato de que, a partir de seu advento, as tarefas de Machine Learning, envolvendo imagens, deixaram de demandar um extenso e complexo trabalho de pré-processamento das entradas, para posterior aplicação de algoritmos de aprendizado.
-Para explicar melhor, suponha que seu objetivo consiste em classificar fotos de pássaros, de acordo com suas respectivas espécies.
-Não é difícil ver que, em muitos casos, a simples identificação das cores da penugem ajudará muito na identificação das espécies. Em outro casos, a identificação das componentes conexas podem ajudar (já que há padrões de textura e desenhos, nas penas dos pássaros). E, ainda em outros, a frequência de variação das tonalidades, podem ser um forte indicativo.
-Enfim, diferentes tipos de filtros seriam necessários, para identificar diferentes conjuntos de características. E, só então, seria possível aplicar um algoritmo de árvore de decisão, por exemplo.
-Agora, some a isso o fato de que as imagens sofrem rotações, translações, variações de escala, de luminosidade, e uma infinidade de outros fatores, na maioria das vezes, difíceis de controlar ou prever.
-Certamente, só com esses destaques, já ficou bem clara a dificuldade de se trabalhar, manualmente, a grande variação dos fatores que influenciam na obtenção das características distintivas ideais para um problema de classificação das espécies de pássaros.
-Mas, e se a obtenção dessas características fosse responsabilidades da própria rede neural? Se fizesse parte do próprio processo de aprendizado?
-É justamente isto que a Rede Neural Convolucional faz!
-É preciso passar, basicamente, as imagens para a rede, com pouco (ou nenhum) tratamento prévio, e ela aprende os filtros, translações (pequenas), e outras transformações necessárias para extrair o conjunto de características adequados à resolução do problema proposto.
-Maravilha! Não?
-É por isso que esse tipo de rede se tornou tão presente no mundo da visão computacional.
-Superando os limites de consumo de memória
-Mas, não é só por conta do pré-processamento que as CNNs se destacaram. Ainda há outro enorme problema no tratamento direto dos dados.
-Retomando o exemplo da seção anterior, para classificar as fotos de pássaros usando redes neurais comuns (compostas por diversas camadas ocultas interconectadas), seria necessário alocar, ao menos na primeira camada da rede, uma quantidade de neurônios suficiente para cobrir uma imagem como um todo.
-Supondo uma imagem em resolução HD, isso é 1280 X 720 pixels, seriam necessários 921.600 neurônios na primeira camada. E, mesmo que diminuíssemos a segunda camada para 1/4 dessa quantidade, teríamos 230.400 na segunda camada.
-Se nossa rede fosse densa, teríamos, entre essas duas camadas, a incrível quantidade de 212.336.640.000 conexões (ou pesos)! É isso mesmo, a quantidade de conexões ultrapassaria os 212 bilhões, e isso sem falar do fato de que uma imagem é composta, via de regra por três canais (RGB).
-Mesmo que cada conexão possa ser representada em 16 bits, estamos falando de cerca de 395 GB memória (de vídeo, normalmente) para alocar apenas as conexões entre as duas primeiras camadas de uma rede neural.
-Totalmente inviável…
-Logo, também para esse desafio, as redes neurais convolucionais surgiram como solução sob medida.
-E, para entender o porque, é preciso mergulhar um pouco mais fundo no modo de como essas redes funcionam.
-Como funcionam as CNNs?
-Vamos tentar tornar esse mergulho tão profundo quanto necessário, mas não mais do isso.
-Em resumo, uma rede neural convolucional é baseada na ideia de filtros!
-Como falamos no início desse texto, muitos problemas de visão computacional podem ser resolvidos por meio da avaliação de características das imagens, as quais se tornam mais evidentes, de acordo com os filtros utilizados.
-É como se mostrássemos um monte de silhuetas de animais para uma criança, e perguntássemos o nome de cada animal… A silhueta basta, e a criança sabe disso.
-Claro que, quanto menos características forem consideradas, maior a chance de enganos, mas, "se anda igual pato, grasna igual pato, voa igual pato… é pato!"
-Essa é a ideia básica.
-Então, uma CNN é construída de modo que são definidas diversas camadas de filtros de tamanho fixo (escolhido pelo projetista da rede), além de algumas camadas de pooling (do que trataremos mais à frente).
-Essas camadas de filtro são organizadas também de acordo com a vontade do projetista (normalmente com base em diversos experimentos), e podem ser aplicadas em sequência, em paralelo, usando-se de diferentes combinações, etc.
-No entanto, é importante notar que os filtros se constituem no elo de ligação entre as diferentes representações da imagem de entrada, construídas na rede.
-Isso é, embora a rede continue tendo como entrada uma imagem, e embora essa imagem seja trabalhada para extração das diversas características necessárias ao problema. Ainda assim, não existem interconexões densas entre essas representações das imagens.
-Na verdade, o que se interpõe, entre uma representação da imagem e outra, é justamente um filtro da CNN. E, nem mesmo esse filtro é conectado de modo denso com as representações da imagem.
-Na prática, o tal filtro não é conectado com nenhuma parte da imagem. Antes, ele é "deslizado" pela imagem, realizando-se uma multiplicação de Hadamard (produto elemento a elemento) entre o filtro e cada quadro da imagem (de mesmo tamanho), gerando, na saída, uma "nova imagem filtrada" (multiplicação, elemento a elemento, de duas matrizes, com mesmo tamanho, com soma do todo ao final - e, normalmente, com a aplicação de uma função de ativação ao resultado.
-Visualmente, o trabalho pode ser representado assim:
-Figura 2- Produto de Hadamard de um filtro por parte de uma camada de entrada.
-Fonte: Adaptado de ResearchGate (2024)E, é justamente dessa operação de deslizamento, que se toma o nome da arquitetura de rede, visto que essa ação corresponde a operação matemática da convolução:
-Figura 3- Fórmula da convolução entre um filtro e uma imagem de entrada.Perceba, portanto, que uma CNN simplesmente dispensa aquele vertiginoso número de interconexões entre as camadas da rede!
-Ainda será preciso, é claro, alocar espaço de memória para cada representação da imagem gerada, e também para cada filtro da CNN. Mas, mesmo assim, a quantidade de memória se torna exponencialmente menor do que a praticada pelas conexões densas antes descritas.
-Por fim, é importante destacar que, via de regra, após a extração das características necessárias a partir dos dados, é adicionada, após as camadas de convolução (e pooling), uma pequena rede densa tradicional (multi-camada), a qual é responsável pela identificação dos padrões necessários para previsão da variável alvo (seja para classificação ou regressão).
-No entanto, para correta adequação das características apreendidas a partir dos dados, nessa última camada de rede neural, se torna necessária a linearização dos dados.
-Isso é, conforme notamos na explicação, as características espaciais (duas dimensões) são preservadas na extração das características. Mas, a pequena rede neural aplicada no final do processo, é uma rede comum (feedforward), no sentido de receber apenas vetores de dados.
-Então, ao final do processo de extração de características, ocorre um achatamento dos dados para uma única dimensão (flatten), permitindo explorar as técnicas comuns de classificação ou regressão, para previsão da variável alvo do problema.
-[Adendo] O que é o tal "pooling" que citamos?
-Além dos filtros, há outra transformação importante para a correta extração das características de uma imagem.
-Voltando ao problema da identificação das espécies de pássaros por meio de fotos, é bem fácil perceber que, dificilmente, em duas fotos, os pássaros estarão posicionados de modo igual. Pássaros não param quietos…
-Para ser sucinto, o que estamos destacando se chama translação e rotação das imagens.
-Portanto, não basta aplicar filtros nas imagens, também é importante considerar um mecanismo que seja capaz de mover as características das imagens, suavizando eventuais variações. E, é nesse ponto que entram as camadas de "pooling".
-As camadas de pooling, na prática, nada mais são do que a aplicação de funções matemáticas, de subamostragem, sobre conjuntos de pontos da imagem, de modo a suavizar essas variações, e destacar o que realmente importa.
-Uma camada de pooling também pode ser deslizada pela imagem. Mas, diferentemente dos filtros anteriormente tratados, as camadas de pooling não tem pesos a serem aprendidos. Antes, elas aplicam uma transformação fixa sobre os pontos da imagem nos quais operam.
-Na verdade, essas transformações fixas tendem a reduzir as dimensões da imagem, uma vez que "destacam o que importa, e descartam o resto". E isso pode ser muito efetivo para suavizar translações, tornando a rede menos sensível à posição exata das características da imagem.
-A saber, essas transformações podem incluir: seleção do valor máximo (max-pooling), seleção do valor mínimo (min-pooling), seleção do valor médio (mean-pooling), etc.
-Visualmente, a aplicação de uma camada de pooling pode ser compreendida assim:
-Figura 3 - Exemplo de Max Pooling
-Fonte: GEEKSFORGEEKS (2025)Obs.: Embora citamos as rotações, a título de melhor compreensão dos problemas espaciais, é importante destacar que as camadas de pooling não são realmente efetivas para evitar esse tipo de problema, e, outras construções podem ser necessárias. Via de regra, esse problema é melhor tratado pelo simples aumento do dataset de amostras (incluindo no mesmo as variações de rotação).
-Obs. 2: Grandes translações também podem não ser bem tratadas pelas camadas de pooling. Mas, certamente, pequenas translações podem ser capturadas com sucesso.
-Resumo do funcionamento
-Em resumo, portanto, uma CNN funciona a partir dos seguintes passos:
-Entrada dos dados.
-Convolução: Aprendizado automático dos melhores filtros para extração das características necessárias ao problema.
-Pooling: Destaque das principais características, e redução da dimensionalidade.
-Classificação ou regressão: Aplicação de uma pequena rede neural densa multi-camada (rede neural feedforward).
 
-Visualmente, o processo completo de uma rede neural convolucional segue o seguinte padrão:
-Figura 4 - Processo completo de uma CNN
-Fonte: SATURN CLOUD (2024)Mas, nem só de imagens se constrói o mundo…
-Iniciamos nossa análise considerando uma abordagem inspirada na história das CNNs, que vieram ao lume primeiro para o tratamento de imagens (em duas dimensões). Mas, nosso foco aqui são as CNN de uma dimensão, e não aquelas dedicadas ao tratamento de imagens.
-Pode parecer estranho, à primeira vista, a utilidade de uma rede destinada a dados de uma única dimensão. Mas, os problemas compostos por dados de uma única dimensão são extremamente variados, e de enorme importância, dentre os quais podemos citar:
-Classificação de sinais sonoros.
-Análise de informações biomédicas (personalizadas ou não).
-Monitoramento da saúde de estruturas prediais.
-Detecção de anomalias em séries numéricas.
-Detecção de falhas de motores.
-E diversos outros que, porventura, envolvam dados escalares em séries temporais.
+Limites da programação tradicional
+Vamos começar essa discussão já dando um passo atrás, e perguntando: o que é um computador?
 
-E, como já argumentamos, a grande sacada das redes convolucionais, que é o aprendizado de filtros que se ajustem satisfatoriamente aos dados, torna-se um objetivo imediatamente desejado também nesses cenários de uma única dimensão.
-Além disso, ainda que em menor escala, a economia de recursos de máquina também se torna necessária em diversos problemas de uma única dimensão, principalmente em problemas da área de computação musical.
-Por exemplo, se o problema for classificar a qual gênero uma música pertence. Como saber, à priori, os tipos de características que devem ser buscados? E, mais ainda, quais filtros e transformações se encaixariam bem para esse propósito?
-Então, a necessidade de expansão das CNNs para o mundo de uma dimensão se mostrou um caminho natural e necessário, sendo, previsivelmente, o que aconteceu.
-Como funcionam as CNNs de uma dimensão?
-Embora essa seja a pergunta imediata a responder, na verdade, após a compreensão das CNNs de duas dimensões, a extensão do raciocínio para uma dimensão é trivial.
-Em resumo, uma CNN de uma dimensão é uma rede neural que contará com diversas camadas de filtros convolucionais, e diversas camadas de pooling, as quais podem ser dispostas conforme a vontade do projetista da rede.
-O objetivo das camadas de filtro são análogos ao caso de duas dimensões, isso é, aprender automaticamente a melhor extração de característica, de acordo com os dados. O que também se faz por meio da operação de convolução ("deslizamento" dos filtros sobre os dados).
-De igual maneira, as camadas de pooling, cumprem o propósito de destacar as principais características identificadas, e suavizar outras variações (ao passo que também reduzem a dimensionalidade dos dados que fluem pela rede).
-Por fim, tal como nas redes de duas dimensões, via de regra, uma pequena rede densa multi-camada é aplicada para classificação ou regressão da variável alvo.
-Diferentemente, porém, das CNNs de duas dimensões, a parte final de uma rede de uma dimensão dispensa a aplicação de um linearização dos dados (flatten), visto que os dados já estão, naturalmente, dispostos em uma dimensão.
-A diferença portanto reside unicamente na dimensão dos dados, e, consequentemente, na dimensão dos filtros e camadas de pooling.
-Obs.: Na prática, todas as operações são sobre vetores, e não matrizes, estando o conceito de matrizes presente apenas quando se analisam dados uni-dimensionais, mas com vários canais de entrada (por exemplo, gravações de som estéreo).
-E, como de fato se organizam os dados em uma dimensão?
-Ok, como vimos, as CNNs de uma dimensão não são muito diferentes de seus pares de duas dimensões. Mas, pode parece estranho imaginar o que fato ocorre na convolução de uma dimensão (especialmente para quem está habituado com o processamento de imagens).
-Se só há uma dimensão, que dimensão é essa? Sobre o que os filtros "deslizam", durante a convolução?
-Ocorre que, normalmente, dados em uma dimensão são representações de séries temporais.
-Uma gravação de áudio, por exemplo, nada mais é do que uma coleção de amostras, igualmente espaçadas (no tempo), da amplitude da onda sonora.
-Visualmente, a amostragem de uma onda sonora, segue uma padrão tal qual:
-Figura 5 - Amostragem de uma onda sonora
-Fonte: KU LEUVEN (2025)Desta forma, após amostragem, um sinal sonoro nada mais e do que um vetor de números, do tipo:
-[-0.8, -0.9, 0.2, 0.7, 0,2, 0.25, -0.1, -0.3, -0.95, 0.3, 0.7, 0,1, ...]
-Assim, uma convolução sobre esse tipo de sinal é simplesmente o "deslizamento" de um filtro sobre o eixo do tempo (dimensão temporal). O que corresponde, precisamente, a boa parte dos tipos normais de filtros aplicados no pré-processamento de sinais de áudio:
-Figura 6 - Representação visual de uma convolução em 1D
-Fonte: PATEL, CHIRAG, et al. (2022)Portanto, a convolução de uma dimensão é simples extensão natural da abordagem que alcançou sucesso no tratamento de imagens, para agora para dados cujo domínio se encontra em qualquer tipo de séries de valores escalares.
+Claro que não vale a pena se delongar aqui… Mas, um computador, de modo muito simplório, pode ser definido como uma “máquina programável”:
+
+Máquina, porque “simplifica” a realização de um determinado trabalho (evitando ser muito filosófico e preciso).
+Programável, porque o “tal trabalho” que se deseja alcançar pode ser modificado sem alterações diretas na estrutura da máquina em si.
+Antes dos computadores, pouco se falava em máquinas de propósito geral. Cada máquina era restrita ao seu próprio fim, e, caso se desejasse alcançar um fim diferente, era preciso mudar tanto da própria máquina, que, na prática, se construía outra.
+
+Portanto, programar nada mais é do que “ensinar essa máquina, chamada computador, a realizar determinada tarefa”. Ou, como se veicula livremente na internet (sem autor canônico conhecido):
+
+Programar é ensinar o ser mais burro do universo a fazer alguma coisa.
+
+E então começarmos a divisar à questão chave para introdução das redes neurais…
+
+O ponto é: E quando eu quero ensinar a máquina a fazer algo que nem eu mesmo sei muito bem explicar como se faz?
+
+Os exemplos são inúmeros:
+
+Como identificar um rosto dentre muitos?
+Como identificar cada caractere de uma frase, e ainda formar palavras?
+Como discernir palavras numa gravação de áudio? Ou mesmo ritmos musicais?
+Como diferenciar um cachorro de um gato? Ou pior, de um lobo?
+Enquanto os computadores foram largamente utilizados com o fim de se automatizar ações que podem ser sistematizadas em termos de um passo a passo bem definido (chamado de “algoritmo”, na área da Ciência da Computação), as diversas formas de programação tradicional couberam muito bem.
+
+O problema é que, com o largo desenvolvimento da computação na sociedade, cada vez mais, se levantam, como requisitos, a realização de tarefas que não podem ser simplesmente definidas em termos de um “passo a passo”.
+
+Assim, a programação tradicional, como meio de “ensinar o comportamento desejado para a máquina”, simplesmente parou de satisfazer às aspirações mercadológicas e acadêmicas, e se tornou necessário definir um novo “método de ensino aos computadores”.
+
+Aprendizado de máquina
+Ate aqui, temos abusado um pouco dos termos, com o fim de motivar melhor a discussão. Mas, tecnicamente, programação não consiste em aprendizado.
+
+Em termos mais precisos, um algoritmo não difere muito de uma receita de bolo, e, embora esses algoritmos reflitam a capacidade de aprendizado, e o acúmulo de conhecimento de seus criadores, do ponto de vista de quem executa, não há aprendizado em absoluto.
+
+A título de exemplo, se uma máquina for programada para perfurar o chão, ainda que sua broca quebre, a menos que o algoritmo esteja explicitamente preparado para essa nova circunstância, ela continuará tentando perfurar o chão indefinidamente, mesmo que isso não leve a efeito algum.
+
+Não há nenhum tipo de melhoria dos resultados. Não importa quantas vezes o algoritmo seja repetido. Não há sequer avaliação sobre se o resultado desejado está sendo atingido (pelo menos não de modo automático).
+
+E, não é difícil perceber que esse tipo de mecanismo não bastará, quando se busca passar para a máquina um processo que nem nós mesmos somos capazes de detalhar.
+
+É nesse ponto, portanto, que se pode iniciar a discussão do que realmente vem a ser aprendizado.
+
+O que é aprender?
+
+Essa questão abre margem para um nível de discussões fora do escopo desse artigo, mas, para termos de simplicidade, o viés aqui adotado se limita ao objetivo de como levar uma máquina a alcançar um resultado desejado (*).
+
+Assim, citando Tom Mitchell (cientista da computação americano, com vasta contribuição no desenvolvimento das técnicas de aprendizado de máquina):
+
+“Um programa de computador aprende com a experiência ‘E’ com respeito a alguma tarefa ‘T’ e alguma medida de desempenho ‘P’, se seu desempenho na tarefa ‘T’, medido por ‘P’, melhora com a experiência ‘E’.” (MITCHELL, 1997)
+
+Ou, afrouxando o rigor acadêmico da definição:
+
+Aprender é ser capaz de realizar, cada vez melhor, uma determinada tarefa, conforme se ganha experiência com a mesma.
+
+Note que, em ambas as definições, o ponto chave do aprendizado não repousa mais sobre o algoritmo, mas sim sobre a capacidade de melhoria continua do resultado, de acordo com um medida de desempenho dada, e devido à experiência.
+
+Não está em questão se a palavra “aprendizado” está perfeitamente aplicada, mas sim se é possível construir um sistema capaz de melhorar sua performance a partir de um processo repetitivo, mensurável, e bem definido (chamado de treinamento, como veremos).
+
+E é justamente sobre esses pilares que foram idealizadas as primeiras redes neurais.
+
+(*) É importante compreender que existem questões filosóficas/metafísicas por trás da pergunta do “que é aprender”. E que as definições técnicas acabam por ser extremamente reducionistas com relação à complexidade das situações experimentadas na realidade.
+
+A título de exemplo, no pensamento platônico, o aprendizado é um processo de reminiscência… Para Platão, não há aprendizado, no sentido de que, no mundo das ideias, tudo que se pode aprender já existe. Cabendo às almas apenas o relembrar daquilo que já experimentaram num passado ideal.
+
+Na contramão de Platão, porém, a filosofia judaico-cristã parte do pressuposto de que a Sabedoria compartilha dos atos criadores de Deus desde o princípio de todas as coisas, a tal ponto de que toda a criação é fundada sobre sólidas bases de lei e ordem. Nessa visão, o processo do aprendizado consiste na investigação dos princípios normativos que regem cada parte da natureza observável, assumindo-se, como pressuposto, que nada é essencialmente randômico; ou dito de modo positivo, toda a criação obedece, necessariamente, leis fixas e passíveis de escrutínio lógico.
+
+Surgimento das rede neurais
+O ponto é: se nós não sabemos explicar, precisamente, como realizamos determinadas tarefas, portanto, como será possível construir um sistema capaz de replicar esse nível de aprendizado?
+
+Encurtando as idas e voltas históricas, o modelo mais promissor acabou por ser aquele que adotou a abordagem da tecnologia bio-inspirada.
+
+Em 1943, Warren McCulloch (neurofisiologista) e Walter Pitts (matemático), se inspiraram no estudo das células neurais de animais (GOODFELLOW, BENGIO e COURVILLE, 2025), justamente com o objetivo de simular o comportamento da única máquina que se conhece capaz de aprender: o cérebro.
+
+A ideia básica derivou da observação de que os neurônios pareciam se comportar como um tipo de filtro de valores de entrada, advindos de uma infinidade de interligações com outros neurônios (uma rede), transitando, para fora de si, prioritariamente, os valores advindos das interconexões de entrada mais utilizadas, e somente se excitados além de um determinado nível básico.
+
+Em palavras mais intuitivas, um neurônio parece escolher passar à diante (após realizar algumas transformações), os impulsos advindos daqueles com os quais ele tem ligações mais fortes (quanto mais usada uma conexão, maior relevância ela recebe para aquele neurônio).
+
+A partir dessas observações, Warren McCulloch e Walter Pitts idealizaram um dos primeiros modelos de neurônio artificial, o qual, após anos de amadurecimento, foi implementado por Frank Rosenblatt (neurobiologista), por meio de um algoritmo que ficou conhecido como Perceptron em 1958 (GOODFELLOW, BENGIO e COURVILLE, 2025).
+
+É claro que essas primeiras concepções e implementações passaram por décadas de amadurecimento e experimentação, mas, essencialmente, o trabalho subsequente não alterou tanto o neurônio como unidade básica da rede neural artificial (naturalmente, outros tipos de neurônio foram concebidos, mas, o modelo matemático do Perceptron permanece como um dos mais bem sucedidos nas redes, visto que pode ser muito bem adaptado às funcionalidades de cálculo vetorial disponíveis no hardware das GPUs modernas; a única alteração conceitual significativa está na grande variedade atual das funções de ativação, enquanto o Perceptron original se limitava a uma função degrau). (**)
+
+Vale a pena, portanto, olhar mais de perto o modelo matemático por trás da concepção do neurônio artificial:
+
+
+Figura 2 — Modelo matemático básico de um neurônio artificial.
+Fonte: GOODFELLOW, BENGIO e COURVILLE (2025)
+Note que, o resultado do processamento de um neurônio artificial é muito simples. Em resumo, sequencialmente, cada neurônio:
+
+Recebe N entradas.
+Faz uma soma ponderada dessas entradas (com pesos adaptáveis) + um bias (ou viés).
+Aplica uma função de ativação sobre o valor da soma.
+Expõe, como saída, o resultado dessa função de ativação.
+Não há muito mistério aqui… É só isso mesmo.
+
+O ponto, é que esse simples arranjo (concebido para imitar timidamente os neurônios de nosso cérebro), é capaz de representar uma série de funções matemáticas, bastando variar os parâmetros de controle da função:
+
+Pesos das entradas (o que permite ajustar a importância dada a cada sinal de entrada).
+Viés (permite deslocar a função da origem do plano).
+Função de ativação (permite adicionar características não lineares ao neurônio artificial).
+Na verdade, com as variações certas desses parâmetros, um arranjo de neurônios artificiais pode assumir comportamentos que vão desde a uma simples regressão linear, até mesmo a simulação de funções parciais de N variáveis (lembrando que um “IF”, de uma linguagem de programação qualquer, pode ser expresso em termos de uma função parcial).
+
+Claro que, um único neurônio pode não ser capaz de aproximar qualquer função matemática desejada (ver observação dessa seção), e, assim como no cérebro (usado como inspiração desde o início), a depender da função, é preciso um arranjo inteligente de interligações entre esses neurônios, para se alcançar determinadas saídas.
+
+A esse arranjo de neurônios, naturalmente, se denominou Rede Neurais Artificiais, que, por sua vez, se mostraram altamente capazes de aproximar funções cada vez mais complexas.
+
+Na verdade, em 1989, os estudos de Cybenko e Hornik demostraram que uma rede neural de pelo menos uma camada oculta de neurônios artificiais (com função de ativação não polinomial), já é capaz de atingir o status de aproximador universal de funções (GOODFELLOW, BENGIO e COURVILLE, 2025 — embora a quantidade de neurônios artificias possa crescer muito, de acordo com a complexidade da função desejada; que é onde as redes neurais profundas iriam despontar como alternativa mais eficiente, e de melhor generalização).
+
+Mas, é isso mesmo, em teoria, com o arranjo correto de neurônios artificias, pode-se aproximar, virtualmente, qualquer função matemática desejada!
+
+Nos anos que se seguiram à concepção das redes neurais mais básicas, o desafio que se impôs, portanto, não era tanto sobre a concepção do modelo em si, mas sim em como ajustar devidamente os parâmetros.
+
+Em termos grosseiros: “Ok, temos uma rede neural que aproxima um monte de funções, mas, como podemos ajustar os parâmetros para alcançar as saídas desejadas? Devo ajustar na mão?”
+
+Obviamente, fazer na mão nunca foi uma opção, e esse é justamente o próximo ponto de evolução que marcou a ciência por trás das redes neurais (conforme veremos na próxima seção), isso é, como ajustar as redes.
+
+A esse processo de ajuste, deu-se o nome de treinamento das redes neurais, e é aqui que reside a capacidade da rede aprender (alcançando a definição técnica de Tom Mitchell, sobre o aprendizado).
+
+Note porém, desde já, que o treinamento dessas redes se revelou como nada mais do que um problema de otimização (para alcançar os melhores parâmetros, que levem ao melhor resultado da médida de performance proposta).
+
+(**) Nesse ponto cabe outra observação: Muito embora as redes de neurônio artificial se mostraram capazes de grandes avanços, é importante combater a ilusão de que um neurônio biológico tenha sido plenamente implementado (como se não houvesse espaço para pequisa em melhorias fundamentais).
+
+A título de exemplo, por volta de 1969, Marvin Minsky e Seymour Papert (independentemente) demostraram teoricamente os limites dos Perceptrons. Na verdade, um Perceptron sozinho não é capaz de generalizar diversos tipos de funções não lineares. E, para ser mais exato, para realizar um simples XOR, são precisos, no mínimo, três Perceptrons.
+
+Ao mesmo tempo, os avanços dos estudos em neurociência demostraram que, em neurônios biológicos, partes de seu corpo (como o axônio) são capazes de atuar de modo não linear, e até mesmo como um tipo de filtro de frequência.
+
+Como consequência, acredita-se que um único neurônio biológico seja capaz aproximar funções não lineares diversas (na verdade, embora não haja consenso, autores como Poirazi & Mel (2003) e Maass (1996) argumentam que um único neurônio biológico poderia atuar como um aproximador universal de funções); enquanto, para neurônios artificiais, são necessários diversas para alcançar o mesmo feito.
+
+Surgimento do método de treinamento: gradiente descedente + retropropagação (backpropagation)
+O próximo passo, portanto, na evolução das redes neurais, como já dissemos, consistiu em escolher um método para calcular os pesos da rede.
+
+Write on Medium
+Retomando a definição de Tom Mitchell:
+
+“Um programa de computador aprende com a experiência ‘E’ com respeito a alguma tarefa ‘T’ e alguma medida de desempenho ‘P’, se seu desempenho na tarefa ‘T’, medido por ‘P’, melhora com a experiência ‘E’.” (MITCHELL, 1997)
+
+Queremos destacar daqui dois pontos, para viabilizar tal cálculo de pesos:
+
+Precisamos de uma medida de desempenho ‘P’.
+Precisamos de um método de experiência ‘E’ (por meio do qual a métrica ‘P’ melhora).
+Donde, para o aprendizado de uma rede neural, se faz necessário escolher um modo de calcular seu desempenho, ou dito de outra forma, um modo de calcular o quanto a rede erra/acerta.
+
+E, a cada vez que se repete o processo de aprendizado (experiência), precisamos novamente calcular o desempenho, buscando uma melhoria contínua.
+
+Ora, para os que estão familiarizados com os diversos métodos de otimização matemática, fica fácil ver que se busca uma função de erro, e um método de diminuição incremental desse erro.
+
+Embora muito se possa discutir sobre as diversas possibilidades de escolha dessa função de erro, para simplificar a discussão, precisamos destacar que, tomando uma rede neural genérica (isso é, sem pensar numa finalidade específica para a mesma), então “qualquer” função de erro serviria (na verdade, qualquer função diferenciável, como veremos).
+
+Ou seja, desde que uma função permita quantificar o quanto a rede errou, ao aproximar o resultado desejável, então essa função já seria uma candidata viável.
+
+Naturalmente, quanto mais específico for um problema, maior a chance de se especular e testar distintas funções de erro que melhor reflitam a medida de desempenho desejada. Mas, pensando genericamente, tomemos uma famosa função, chamada de erro médio quadrático (ou MSE, Mean Square Error, em inglês):
+
+Press enter or click to view image in full size
+
+Figura 3— Erro médio quadrático
+Essa função matemática calcula o somatório do quadrado dos erros, para cada um dos ‘N’ valores que se tentou estimar com a Rede Neural, e, em seguida, divide esse total pela quantidade dos valores (tomando a média do quadrado do erro).
+
+Lembre-se que as Rede Neurais são tão interessantes justamente porque, no limite, servem para aproximar qualquer função matemática (continua), conhecida ou não…
+
+O raciocínio dedutivo aqui é o seguinte (***):
+
+Se sabemos que, na observação do mundo físico, os fenômenos se comportam segundo leis que podem ser expressas por meio de funções matemáticas.
+E, se sabemos que qualquer função matemática (contínua) pode ser aproximada por meio de uma Rede Neural.
+Portanto, as Redes Neurais podem aproximar o cálculo de qualquer um desses fenômenos físicos.
+Então, para usarmos uma Rede Neural para prever a movimentação de uma onda sonora, por exemplo, podemos simplesmente colher N amostras da tal onda, e, escolhendo uma função de erro adequada, podemos otimizar o pesos dessa rede para representar a função real que governa aquela onda sonora.
+
+As perguntas que surgem são duas:
+
+Como minimizar a função de erro escolhida?
+Como ajustar os pesos da rede, para convergirem para a tal redução do erro?
+Retomando o Erro Médio Quadrático, se plotarmos esse tipo de função, obteremos um comportamento parabólico, como:
+
+
+Figura 4 — Função do erro médio quadrático, em relação ao valor previsto.
+Note que, a função acima foi escolhida com uma única variável, para simplificar a visualização. Mas, “na vida real”, a maioria das funções de interesse para uma rede neural serão de N variáveis, e, além de não ser possível plotá-las visualmente, certamente poderão ser funções com vários mínimos locais (dificultando o processo de otimização).
+
+Seja como for, o que desejamos para o aprendizado é atingir ou o mínimo global, ou pelo menos um mínimo local que permita boa aproximação dos valores reais…
+
+E, para isso, concebeu-se o método do Gradiente Descendente, o qual consiste em: tomada uma função de erro, usa-se do vetor gradiente dessa função, para encontrar a direção de maior decréscimo do erro.
+
+Vale lembrar (do Cálculo Diferencial) que o “Vetor Gradiente” de qualquer função, consiste num vetor formado pelas derivadas parciais da função, consideradas em torno de todas as variáveis da mesma, e, na verdade, esse vetor aponta para a direção de maior crescimento da função:
+
+Press enter or click to view image in full size
+
+Figura 5— Cálculo do vetor gradiente de uma função qualquer.
+Se aplicarmos essa ideia à função de erro, e tomarmos o inverso desse vetor, teremos a direção de maior decréscimo do erro. E, portanto, teremos um método bastante eficaz para otimizar o aprendizado de uma Rede Neural.
+
+Graficamente o que se deseja é:
+
+Press enter or click to view image in full size
+
+Figura 6 — Ilustração do método do gradiente descendente.
+Fonte: GOODFELLOW, BENGIO e COURVILLE (2025)
+Note que, a cada etapa da otimização, o gradiente é calculado novamente, e, seu inverso é tomado, permitindo uma aproximação gradual do valor mínimo da função de erro (aqui ilustrada como uma MSE de apenas duas dimensões).
+
+Respondida, portanto, a primeira das duas perguntas que levantamos acima: “Como minimizar a função de erro escolhida?”, ainda resta:
+
+“Como ajustar os pesos da rede, para convergirem para a tal redução do erro?”
+
+Aqui entra um grande desafio no treinamento das redes neurais, cuja solução foi proposta em 1970, mas, só realmente popularizada em 1986, pelo famoso artigo “Learning representations by back-propagating errors”, de David Rumelhart, Geoffrey Hinton e Ronald Williams (GOODFELLOW, BENGIO e COURVILLE, 2025).
+
+A ideia básica, do que ficou conhecido como método da retropropagação (ou backpropagation, em inglês), é simplesmente:
+
+Calcular o quanto cada peso da rede teve participação no erro, e ajustar o tal peso de modo proporcional à sua participação.
+
+Quanto mais participou do erro, mais um peso tende a ser reduzido, e, quanto mais um peso contribui para o acerto, mais o mesmo tende a não ser alterado (ou até mesmo pode ser reforçado).
+
+Essa é uma ideia bem mais fácil de enunciar do que de se implementar. Mas, resumidamente, considerando um único neurônio, tem-se o seguinte passo a passo:
+
+1. Calcular a previsão de saída do neurônio (forward-propagation);
+
+2. Calcular o erro.
+
+3. Para cada peso de entrada do neurônio:
+
+3.1. Calcular a derivada do erro com relação aquele peso.
+
+3.2. Atualizar o peso, na direção contrária da derivada parcial (considerando um fator multiplicativo, apenas para controlar a velocidade do aprendizado, e evitar saltos bruscos que podem impedir a convergência):
+
+
+Figura 7 — Atualização do peso do neurônio.
+Note que, como a derivada parcial é calculada com relação a cada peso de entrada, por fim, o que esta sendo levado à efeito é justamente a aplicação do gradiente descendente, atualizando cada peso com relação ao inverso de sua contribuição para o crescimento da função de erro como um todo.
+
+A análise acima, porém, está focada num único neurônio, e, numa rede neural normal, o processo precisará ser repetido para todos os neurônios da mesma.
+
+Nesse ponto então, será necessário calcular não apenas quanto cada peso contribuiu para o erro de um neurônio. Mas, também como cada saída, de cada neurônio (das camadas internas, ou ocultas da rede), contribuiu para o erro final da rede…
+
+Evitando mergulhar mais fundo do que o necessário, em resumo, para cada neurônio, calcula-se sua respectiva participação proporcional no erro da rede, e então se aplicam os passos acima (a dificuldade de calcular o erro proporcional é resolvida pela “regra da cadeia”, que nos permite entender o quanto a derivada da função erro é afetada por cada uma de suas entradas, que, coincidem, justamente, com as saídas dos neurônios das camadas intermediárias).
+
+Por fim, para minimização real do erro, basta agora aplicar o cálculo N vezes, para cada amostra da função real sendo aproximada…
+
+Alcançando-se, portanto, justamente a ideia de experiência proposta por Tom Mitchell.
+
+(***) Mais uma vez, temos um salto filosófico enorme, e um pressuposto rigidamente assumido… A ideia de que todos os fenômenos podem ser expressos por meio de funções matemáticas é largamente experimentada nas ciências naturais, contudo, trata-se de um raciocínio indutivo (do particular para o geral), e, embora esteja de acordo com a cosmovisão judaico-cristã (do universo que segue a lei da Sabedoria), ainda assim precisa ser reconhecida como reducionista (no sentido de que há pontos críticos de difícil escrutínio matemático, exemplificados em paradoxos, como o de Zenão; cuja solução carece de apelar para o somatório de séries infinitas, desafiando os limites do que se pode chamar de uma formulação matemática “bem determinada” — além disso, mesmo na cosmovisão judaico-cristã, a ideia da Sabedoria buscada pela lógica humana, se limita à atingir a criação, e não o Criador).
+
+Indo ainda um pouco mais longe na discussão filosófica, pode-se apelar para o fato de que, aceitar que todos os fenômenos são necessariamente regidos por algum tipo de abstração física (e, portanto, lógico/matemática), implica em sugerir que o material é regido pleo imaterial (o físico é regido pela abstração). O que, por mais que se verifique na prática, ainda assim desafia a tradicional lógica humana de causa e efeito, sendo portanto uma fonte de grande controvérsia.
+
+Certo é que essa discussão foge ao escopo desse trabalho. Mas, o que importa aqui é salvaguardar excessos com relação a interpretação das capacidades de uma Rede Neural, que, por mais poderosa que seja, não pode, logicamente, ser entendida como um tipo de “oráculo universal contemporâneo”.
+
 Conclusão
-As rede neurais convolucionais se desenvolveram como resposta sob medida para os principais desafios na manipulação de dados de problemas de processamento de imagens. Sejam eles:
-Aprendizado automático dos filtros ideais para o problema (dispensando extenso pré-processamento dos dados).
-Economia dos recursos de máquina (não apenas por questões de custo, mas para viabilidade real de tratamento dos problemas propostos).
+Como vimos, então, a reunião desse largo conjunto de ideias, a saber:
 
-Desta forma, se tornaram também o padrão e estado da arte para uma grande diversidade de problemas de visão computacional.
-No entanto, não demorou muito para se notar que diversos problemas de uma única dimensão compartilhavam dos mesmos desafios, se tornando, portanto, um necessidade natural a extensão das mesmas estratégias para o mundo uni-dimensional.
-Portanto, atualmente, o estado da arte de diversos desafios de uma única dimensão, como em problemas de computação musical, contam também fortemente com a aplicação das técnicas de redes convolucionais.
+Neurônio Artificial
+Encadeamento dos Neurônios (Rede Neural)
+Funções de Erro
+Otimização por Gradiente Descendente
+Retro-propagação dos erros
+Permitiu solidificar o que se convencionou chamar de Aprendizado de Máquina.
 
----
+Aprendizado esse que, respeitados os devidos limites da abstração proposta, nos permitir, virtualmente, aproximar qualquer função matemática (contínua) a partir de um conjunto de amostras da realidade observada.
+
+É claro que questões filosóficas e numéricas devem ser consideradas: quantidade de amostras, problema dos mínimos locais, duração do treino, o pressuposto de que um problema possa ser representado por uma função, e até mesmo a correta escolha das variáveis de entrada.
+
+Mas, em termos gerais, a concepção matemática, e a realidade prática, tem demostrado que essa abordagem viabiliza de fato a resolução de problemas que, embora não possam ser expressos em termos de um passo a passo bem definido, ainda assim podem ser tratados por meio de máquinas de propósito geral.
+
+A Redes Neurais Artificiais despontam, portanto, como o estado da arte para automação de tarefas antes só atingidas por meio de sistemas biológico complexos (e não explicáveis por meio de métodos algorítmicos).
 
 Referências
-CNN | Introduction to Pooling Layer. Geeks for Geeks. Disponível em: https://www.geeksforgeeks.org/cnn-introduction-to-pooling-layer/. Acesso em: 28 maio 2025.
-KIRANYAZ, S. et al. 1D Convolutional Neural Networks and Applications - A Survey. Mechanical Systems and Signal Processing, [S. l.], v. 151, p. 107398, 2021. DOI: 10.1016/j.ymssp.2020.107398.
-Digitizing Audio Signals. KU Leuven. Disponível em: https://homes.esat.kuleuven.be/~spchlab/AudioDemonstrations/Sampling.htm. Acesso em: 28 maio 2025.
-Patel, Chirag, et al. (2022). DBGC: Dimension-Based Generic Convolution Block for Object Recognition. MDPI. Disponível em: https://www.mdpi.com/1424-8220/22/5/1780. Acesso em: 28 maio 2025.
-Rokh, Babak & Azarpeyvand, Ali & Khanteymoori, Alireza. (2022). Hadamard product of a filter and a part of layer's input. ResearchGate. Disponível em: https://www.researchgate.net/figure/Hadamard-product-of-a-filter-and-a-part-of-layers-input_fig16_360668087. Acesso em: 28 maio 2025.
-Sumit Saha. (2024). A Guide to Convolutional Neural Networks - the ELI5 way. Saturn Cloud. Disponível em: https://saturncloud.io/blog/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way/. Acesso em: 28 maio 2025.
-Y. LeCun. Gradient Based Learning Applied To Document Recognition. Proc. IEEE. 86 (1998) 2278–2324.
+GOODFELLOW, Ian; BENGIO, Yoshua; COURVILLE, Aaron. Deep Learning. Tradução: Hugo Vale. Disponível em: https://www.deeplearningbook.com.br. Acesso em: 02 jul. 2025.
+
+MITCHELL, Tom M. Machine Learning. New York: McGraw-Hill, 1997.
+

@@ -33,6 +33,8 @@
 *.nlo
 *.mw
 *.brf
+*.ilg
+*.ind
 
 # Saídas finais que podem ser recompiladas
 # *.pdf
