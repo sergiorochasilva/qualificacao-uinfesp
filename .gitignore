@@ -14,6 +14,25 @@
 *.nav
 *.snm
 *.vrb
+*.idx
+*.glo
+*.gls
+*.ist
+*.acn
+*.acr
+*.alg
+*.glg
+*.glsdefs
+*.glsidx
+*.glslog
+*.glsrun.xml
+*.loa
+*.lol
+*.loq
+*.los
+*.nlo
+*.mw
+*.brf
 
 # Saídas finais que podem ser recompiladas
 # *.pdf
