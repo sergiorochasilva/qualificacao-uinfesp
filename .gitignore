@@ -1,0 +1,35 @@
+# Arquivos auxiliares comuns do LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.bbl
+*.blg
+*.nav
+*.snm
+*.vrb
+
+# Saídas finais que podem ser recompiladas
+# *.pdf
+*.dvi
+*.ps
+
+# Diretórios temporários
+_build/
+latex.out/
+auto/
+
+# Arquivos de backup (muitos editores criam)
+*~
+*.swp
+*.bak
+
+# Configurações locais (TexShop, TeXworks, etc.)
+*.texpadtmp
+*.synctex.gz(busy)
