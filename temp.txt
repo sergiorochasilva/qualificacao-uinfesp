@@ -1,0 +1,123 @@
+---
+
+Por que as CNNs fizeram tanto sucesso?
+Superando o pré-processamento
+Com suas origens nos anos 90 (KIRANYAZ et al., 2021), as redes neurais convolucionais se tornaram um padrão inequívoco em problemas de visão computacional, classificação, identificação de objetos, ou qualquer outro que envolva o aprendizado máquina a partir de imagens.
+O "grande boom" desse tipo de rede se deu por conta do fato de que, a partir de seu advento, as tarefas de Machine Learning, envolvendo imagens, deixaram de demandar um extenso e complexo trabalho de pré-processamento das entradas, para posterior aplicação de algoritmos de aprendizado.
+Para explicar melhor, suponha que seu objetivo consiste em classificar fotos de pássaros, de acordo com suas respectivas espécies.
+Não é difícil ver que, em muitos casos, a simples identificação das cores da penugem ajudará muito na identificação das espécies. Em outro casos, a identificação das componentes conexas podem ajudar (já que há padrões de textura e desenhos, nas penas dos pássaros). E, ainda em outros, a frequência de variação das tonalidades, podem ser um forte indicativo.
+Enfim, diferentes tipos de filtros seriam necessários, para identificar diferentes conjuntos de características. E, só então, seria possível aplicar um algoritmo de árvore de decisão, por exemplo.
+Agora, some a isso o fato de que as imagens sofrem rotações, translações, variações de escala, de luminosidade, e uma infinidade de outros fatores, na maioria das vezes, difíceis de controlar ou prever.
+Certamente, só com esses destaques, já ficou bem clara a dificuldade de se trabalhar, manualmente, a grande variação dos fatores que influenciam na obtenção das características distintivas ideais para um problema de classificação das espécies de pássaros.
+Mas, e se a obtenção dessas características fosse responsabilidades da própria rede neural? Se fizesse parte do próprio processo de aprendizado?
+É justamente isto que a Rede Neural Convolucional faz!
+É preciso passar, basicamente, as imagens para a rede, com pouco (ou nenhum) tratamento prévio, e ela aprende os filtros, translações (pequenas), e outras transformações necessárias para extrair o conjunto de características adequados à resolução do problema proposto.
+Maravilha! Não?
+É por isso que esse tipo de rede se tornou tão presente no mundo da visão computacional.
+Superando os limites de consumo de memória
+Mas, não é só por conta do pré-processamento que as CNNs se destacaram. Ainda há outro enorme problema no tratamento direto dos dados.
+Retomando o exemplo da seção anterior, para classificar as fotos de pássaros usando redes neurais comuns (compostas por diversas camadas ocultas interconectadas), seria necessário alocar, ao menos na primeira camada da rede, uma quantidade de neurônios suficiente para cobrir uma imagem como um todo.
+Supondo uma imagem em resolução HD, isso é 1280 X 720 pixels, seriam necessários 921.600 neurônios na primeira camada. E, mesmo que diminuíssemos a segunda camada para 1/4 dessa quantidade, teríamos 230.400 na segunda camada.
+Se nossa rede fosse densa, teríamos, entre essas duas camadas, a incrível quantidade de 212.336.640.000 conexões (ou pesos)! É isso mesmo, a quantidade de conexões ultrapassaria os 212 bilhões, e isso sem falar do fato de que uma imagem é composta, via de regra por três canais (RGB).
+Mesmo que cada conexão possa ser representada em 16 bits, estamos falando de cerca de 395 GB memória (de vídeo, normalmente) para alocar apenas as conexões entre as duas primeiras camadas de uma rede neural.
+Totalmente inviável…
+Logo, também para esse desafio, as redes neurais convolucionais surgiram como solução sob medida.
+E, para entender o porque, é preciso mergulhar um pouco mais fundo no modo de como essas redes funcionam.
+Como funcionam as CNNs?
+Vamos tentar tornar esse mergulho tão profundo quanto necessário, mas não mais do isso.
+Em resumo, uma rede neural convolucional é baseada na ideia de filtros!
+Como falamos no início desse texto, muitos problemas de visão computacional podem ser resolvidos por meio da avaliação de características das imagens, as quais se tornam mais evidentes, de acordo com os filtros utilizados.
+É como se mostrássemos um monte de silhuetas de animais para uma criança, e perguntássemos o nome de cada animal… A silhueta basta, e a criança sabe disso.
+Claro que, quanto menos características forem consideradas, maior a chance de enganos, mas, "se anda igual pato, grasna igual pato, voa igual pato… é pato!"
+Essa é a ideia básica.
+Então, uma CNN é construída de modo que são definidas diversas camadas de filtros de tamanho fixo (escolhido pelo projetista da rede), além de algumas camadas de pooling (do que trataremos mais à frente).
+Essas camadas de filtro são organizadas também de acordo com a vontade do projetista (normalmente com base em diversos experimentos), e podem ser aplicadas em sequência, em paralelo, usando-se de diferentes combinações, etc.
+No entanto, é importante notar que os filtros se constituem no elo de ligação entre as diferentes representações da imagem de entrada, construídas na rede.
+Isso é, embora a rede continue tendo como entrada uma imagem, e embora essa imagem seja trabalhada para extração das diversas características necessárias ao problema. Ainda assim, não existem interconexões densas entre essas representações das imagens.
+Na verdade, o que se interpõe, entre uma representação da imagem e outra, é justamente um filtro da CNN. E, nem mesmo esse filtro é conectado de modo denso com as representações da imagem.
+Na prática, o tal filtro não é conectado com nenhuma parte da imagem. Antes, ele é "deslizado" pela imagem, realizando-se uma multiplicação de Hadamard (produto elemento a elemento) entre o filtro e cada quadro da imagem (de mesmo tamanho), gerando, na saída, uma "nova imagem filtrada" (multiplicação, elemento a elemento, de duas matrizes, com mesmo tamanho, com soma do todo ao final - e, normalmente, com a aplicação de uma função de ativação ao resultado.
+Visualmente, o trabalho pode ser representado assim:
+Figura 2- Produto de Hadamard de um filtro por parte de uma camada de entrada.
+Fonte: Adaptado de ResearchGate (2024)E, é justamente dessa operação de deslizamento, que se toma o nome da arquitetura de rede, visto que essa ação corresponde a operação matemática da convolução:
+Figura 3- Fórmula da convolução entre um filtro e uma imagem de entrada.Perceba, portanto, que uma CNN simplesmente dispensa aquele vertiginoso número de interconexões entre as camadas da rede!
+Ainda será preciso, é claro, alocar espaço de memória para cada representação da imagem gerada, e também para cada filtro da CNN. Mas, mesmo assim, a quantidade de memória se torna exponencialmente menor do que a praticada pelas conexões densas antes descritas.
+Por fim, é importante destacar que, via de regra, após a extração das características necessárias a partir dos dados, é adicionada, após as camadas de convolução (e pooling), uma pequena rede densa tradicional (multi-camada), a qual é responsável pela identificação dos padrões necessários para previsão da variável alvo (seja para classificação ou regressão).
+No entanto, para correta adequação das características apreendidas a partir dos dados, nessa última camada de rede neural, se torna necessária a linearização dos dados.
+Isso é, conforme notamos na explicação, as características espaciais (duas dimensões) são preservadas na extração das características. Mas, a pequena rede neural aplicada no final do processo, é uma rede comum (feedforward), no sentido de receber apenas vetores de dados.
+Então, ao final do processo de extração de características, ocorre um achatamento dos dados para uma única dimensão (flatten), permitindo explorar as técnicas comuns de classificação ou regressão, para previsão da variável alvo do problema.
+[Adendo] O que é o tal "pooling" que citamos?
+Além dos filtros, há outra transformação importante para a correta extração das características de uma imagem.
+Voltando ao problema da identificação das espécies de pássaros por meio de fotos, é bem fácil perceber que, dificilmente, em duas fotos, os pássaros estarão posicionados de modo igual. Pássaros não param quietos…
+Para ser sucinto, o que estamos destacando se chama translação e rotação das imagens.
+Portanto, não basta aplicar filtros nas imagens, também é importante considerar um mecanismo que seja capaz de mover as características das imagens, suavizando eventuais variações. E, é nesse ponto que entram as camadas de "pooling".
+As camadas de pooling, na prática, nada mais são do que a aplicação de funções matemáticas, de subamostragem, sobre conjuntos de pontos da imagem, de modo a suavizar essas variações, e destacar o que realmente importa.
+Uma camada de pooling também pode ser deslizada pela imagem. Mas, diferentemente dos filtros anteriormente tratados, as camadas de pooling não tem pesos a serem aprendidos. Antes, elas aplicam uma transformação fixa sobre os pontos da imagem nos quais operam.
+Na verdade, essas transformações fixas tendem a reduzir as dimensões da imagem, uma vez que "destacam o que importa, e descartam o resto". E isso pode ser muito efetivo para suavizar translações, tornando a rede menos sensível à posição exata das características da imagem.
+A saber, essas transformações podem incluir: seleção do valor máximo (max-pooling), seleção do valor mínimo (min-pooling), seleção do valor médio (mean-pooling), etc.
+Visualmente, a aplicação de uma camada de pooling pode ser compreendida assim:
+Figura 3 - Exemplo de Max Pooling
+Fonte: GEEKSFORGEEKS (2025)Obs.: Embora citamos as rotações, a título de melhor compreensão dos problemas espaciais, é importante destacar que as camadas de pooling não são realmente efetivas para evitar esse tipo de problema, e, outras construções podem ser necessárias. Via de regra, esse problema é melhor tratado pelo simples aumento do dataset de amostras (incluindo no mesmo as variações de rotação).
+Obs. 2: Grandes translações também podem não ser bem tratadas pelas camadas de pooling. Mas, certamente, pequenas translações podem ser capturadas com sucesso.
+Resumo do funcionamento
+Em resumo, portanto, uma CNN funciona a partir dos seguintes passos:
+Entrada dos dados.
+Convolução: Aprendizado automático dos melhores filtros para extração das características necessárias ao problema.
+Pooling: Destaque das principais características, e redução da dimensionalidade.
+Classificação ou regressão: Aplicação de uma pequena rede neural densa multi-camada (rede neural feedforward).
+
+Visualmente, o processo completo de uma rede neural convolucional segue o seguinte padrão:
+Figura 4 - Processo completo de uma CNN
+Fonte: SATURN CLOUD (2024)Mas, nem só de imagens se constrói o mundo…
+Iniciamos nossa análise considerando uma abordagem inspirada na história das CNNs, que vieram ao lume primeiro para o tratamento de imagens (em duas dimensões). Mas, nosso foco aqui são as CNN de uma dimensão, e não aquelas dedicadas ao tratamento de imagens.
+Pode parecer estranho, à primeira vista, a utilidade de uma rede destinada a dados de uma única dimensão. Mas, os problemas compostos por dados de uma única dimensão são extremamente variados, e de enorme importância, dentre os quais podemos citar:
+Classificação de sinais sonoros.
+Análise de informações biomédicas (personalizadas ou não).
+Monitoramento da saúde de estruturas prediais.
+Detecção de anomalias em séries numéricas.
+Detecção de falhas de motores.
+E diversos outros que, porventura, envolvam dados escalares em séries temporais.
+
+E, como já argumentamos, a grande sacada das redes convolucionais, que é o aprendizado de filtros que se ajustem satisfatoriamente aos dados, torna-se um objetivo imediatamente desejado também nesses cenários de uma única dimensão.
+Além disso, ainda que em menor escala, a economia de recursos de máquina também se torna necessária em diversos problemas de uma única dimensão, principalmente em problemas da área de computação musical.
+Por exemplo, se o problema for classificar a qual gênero uma música pertence. Como saber, à priori, os tipos de características que devem ser buscados? E, mais ainda, quais filtros e transformações se encaixariam bem para esse propósito?
+Então, a necessidade de expansão das CNNs para o mundo de uma dimensão se mostrou um caminho natural e necessário, sendo, previsivelmente, o que aconteceu.
+Como funcionam as CNNs de uma dimensão?
+Embora essa seja a pergunta imediata a responder, na verdade, após a compreensão das CNNs de duas dimensões, a extensão do raciocínio para uma dimensão é trivial.
+Em resumo, uma CNN de uma dimensão é uma rede neural que contará com diversas camadas de filtros convolucionais, e diversas camadas de pooling, as quais podem ser dispostas conforme a vontade do projetista da rede.
+O objetivo das camadas de filtro são análogos ao caso de duas dimensões, isso é, aprender automaticamente a melhor extração de característica, de acordo com os dados. O que também se faz por meio da operação de convolução ("deslizamento" dos filtros sobre os dados).
+De igual maneira, as camadas de pooling, cumprem o propósito de destacar as principais características identificadas, e suavizar outras variações (ao passo que também reduzem a dimensionalidade dos dados que fluem pela rede).
+Por fim, tal como nas redes de duas dimensões, via de regra, uma pequena rede densa multi-camada é aplicada para classificação ou regressão da variável alvo.
+Diferentemente, porém, das CNNs de duas dimensões, a parte final de uma rede de uma dimensão dispensa a aplicação de um linearização dos dados (flatten), visto que os dados já estão, naturalmente, dispostos em uma dimensão.
+A diferença portanto reside unicamente na dimensão dos dados, e, consequentemente, na dimensão dos filtros e camadas de pooling.
+Obs.: Na prática, todas as operações são sobre vetores, e não matrizes, estando o conceito de matrizes presente apenas quando se analisam dados uni-dimensionais, mas com vários canais de entrada (por exemplo, gravações de som estéreo).
+E, como de fato se organizam os dados em uma dimensão?
+Ok, como vimos, as CNNs de uma dimensão não são muito diferentes de seus pares de duas dimensões. Mas, pode parece estranho imaginar o que fato ocorre na convolução de uma dimensão (especialmente para quem está habituado com o processamento de imagens).
+Se só há uma dimensão, que dimensão é essa? Sobre o que os filtros "deslizam", durante a convolução?
+Ocorre que, normalmente, dados em uma dimensão são representações de séries temporais.
+Uma gravação de áudio, por exemplo, nada mais é do que uma coleção de amostras, igualmente espaçadas (no tempo), da amplitude da onda sonora.
+Visualmente, a amostragem de uma onda sonora, segue uma padrão tal qual:
+Figura 5 - Amostragem de uma onda sonora
+Fonte: KU LEUVEN (2025)Desta forma, após amostragem, um sinal sonoro nada mais e do que um vetor de números, do tipo:
+[-0.8, -0.9, 0.2, 0.7, 0,2, 0.25, -0.1, -0.3, -0.95, 0.3, 0.7, 0,1, ...]
+Assim, uma convolução sobre esse tipo de sinal é simplesmente o "deslizamento" de um filtro sobre o eixo do tempo (dimensão temporal). O que corresponde, precisamente, a boa parte dos tipos normais de filtros aplicados no pré-processamento de sinais de áudio:
+Figura 6 - Representação visual de uma convolução em 1D
+Fonte: PATEL, CHIRAG, et al. (2022)Portanto, a convolução de uma dimensão é simples extensão natural da abordagem que alcançou sucesso no tratamento de imagens, para agora para dados cujo domínio se encontra em qualquer tipo de séries de valores escalares.
+Conclusão
+As rede neurais convolucionais se desenvolveram como resposta sob medida para os principais desafios na manipulação de dados de problemas de processamento de imagens. Sejam eles:
+Aprendizado automático dos filtros ideais para o problema (dispensando extenso pré-processamento dos dados).
+Economia dos recursos de máquina (não apenas por questões de custo, mas para viabilidade real de tratamento dos problemas propostos).
+
+Desta forma, se tornaram também o padrão e estado da arte para uma grande diversidade de problemas de visão computacional.
+No entanto, não demorou muito para se notar que diversos problemas de uma única dimensão compartilhavam dos mesmos desafios, se tornando, portanto, um necessidade natural a extensão das mesmas estratégias para o mundo uni-dimensional.
+Portanto, atualmente, o estado da arte de diversos desafios de uma única dimensão, como em problemas de computação musical, contam também fortemente com a aplicação das técnicas de redes convolucionais.
+
+---
+
+Referências
+CNN | Introduction to Pooling Layer. Geeks for Geeks. Disponível em: https://www.geeksforgeeks.org/cnn-introduction-to-pooling-layer/. Acesso em: 28 maio 2025.
+KIRANYAZ, S. et al. 1D Convolutional Neural Networks and Applications - A Survey. Mechanical Systems and Signal Processing, [S. l.], v. 151, p. 107398, 2021. DOI: 10.1016/j.ymssp.2020.107398.
+Digitizing Audio Signals. KU Leuven. Disponível em: https://homes.esat.kuleuven.be/~spchlab/AudioDemonstrations/Sampling.htm. Acesso em: 28 maio 2025.
+Patel, Chirag, et al. (2022). DBGC: Dimension-Based Generic Convolution Block for Object Recognition. MDPI. Disponível em: https://www.mdpi.com/1424-8220/22/5/1780. Acesso em: 28 maio 2025.
+Rokh, Babak & Azarpeyvand, Ali & Khanteymoori, Alireza. (2022). Hadamard product of a filter and a part of layer's input. ResearchGate. Disponível em: https://www.researchgate.net/figure/Hadamard-product-of-a-filter-and-a-part-of-layers-input_fig16_360668087. Acesso em: 28 maio 2025.
+Sumit Saha. (2024). A Guide to Convolutional Neural Networks - the ELI5 way. Saturn Cloud. Disponível em: https://saturncloud.io/blog/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way/. Acesso em: 28 maio 2025.
+Y. LeCun. Gradient Based Learning Applied To Document Recognition. Proc. IEEE. 86 (1998) 2278–2324.
