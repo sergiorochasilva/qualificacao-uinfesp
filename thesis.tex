@@ -15,7 +15,7 @@
 %   Curso                 = doutorado/mestrado
 %   Situação do trabalho  = pre-defesa/pos-defesa (exceto para qualificação)
 %   Versão para impressão = impressao
-\documentclass[doutorado, pos-defesa]{packages/icmc}
+\documentclass[qualificacao, pos-defesa]{packages/icmc}
 
 % ---------------------------------------------------------------------------
 % Pacotes Opcionais
@@ -37,15 +37,15 @@
 % Informações de dados para CAPA e FOLHA DE ROSTO
 % ---
 % Tanto na capa quanto nas folhas de rosto apenas a primeira letra da primeira palavra (ou nomes próprios) devem estar em letra maiúscula, todas as demais devem ser em letra minúscula.
-\tituloPT{Modelo de teses e dissertações em LaTeX do ICT-UNIFESP}
-\tituloEN{Model of theses and dissertations in LaTeX of the ICT-UNIFESP}
-\autor[de Tal, Fulano]{Fulando de Tal}
+\tituloPT{ESTIMADOR AUTOMÁTICO DE PARÂMETROS PARA SÍNTESE FM POR MEIO DE REDES NEURAIS CONVOLUCIONAIS}
+\tituloEN{Automatic Parameter Estimator for FM Synthesis Using Convolutional Neural Networks}
+\autor[Rocha da Silva, Sergio]{Sergio Rocha da Silva}
 \genero{M} % Gênero do autor (M = Masculino / F = Feminino)
-\orientador[Orientador]{Prof. Dr.}{Beltrano da Silva}
+\orientador[Orientador]{Prof. Dr.}{Márcio Porto Basgalupp}
 %\coorientador{Prof. Dr.}{Fulano de Tal}
 \curso{PPGCC}
-\data{01}{09}{2022} % Data do depósito
-\idioma{PT} % Idioma principal do documento (PT = português / EN = inglês)
+\data{21}{04}{2026} % Data do depósito
+\idioma{EN} % Idioma principal do documento (PT = português / EN = inglês)
 % ---
 
 
@@ -57,16 +57,16 @@
 % conter no máximo 500 palavras
 % conter no mínimo 1 e no máximo 5 palavras-chave
 \textoresumo[brazil]{
-    Este trabalho é um breve modelo  para a escrita de monografias de qualificação, dissertações e teses utilizando o ambiente \LaTeX, de acordo com as normas exigidas pelo Instituto de Ciência e Tecnologia (ICT), da Universidade Federal de São Paulo (UNIFESP). Para a confecção deste modelo foi utilizado a última versão (1.9.6) do pacote de classes \textit{abnTeX2} que segue as normas da Associação Brasileira de Normas Técnicas. A elaboração de uma monografia, dissertação ou tese pode ser feita sobrescrevendo o conteúdo deste modelo. 
-    }{Modelo, Monografia de qualificação, Dissertação, Tese, Latex}
+    A síntese FM é uma das técnicas mais renomadas de síntese sonora e, embora seja um método antigo, ainda permanece amplamente utilizada atualmente. Ela é simples, computacionalmente barata e capaz de produzir resultados de alta qualidade. No entanto, o uso bem-sucedido desse tipo de síntese de áudio apresenta um desafio significativo: a seleção dos parâmetros corretos para o sintetizador. Esse processo não é preciso, e não há um procedimento totalmente determinístico a ser seguido. Os músicos geralmente são guiados pela intuição e por um processo empírico de tentativa e erro. Para revitalizar essa técnica e aproveitar seus benefícios, o uso de modelos de CNN surge como uma opção bastante promissora, pois eles podem ajudar músicos a obter resultados convincentes, imitando instrumentos reais em pouco tempo e a baixo custo, ou até mesmo criando timbres e efeitos totalmente imprevisíveis. Dessa forma, este trabalho explora essa abordagem por meio da criação de um pipeline capaz não apenas de treinar um modelo de CNN para prever os parâmetros adequados que permitam a um sintetizador FM ressintetizar amostras de áudio originais (como instrumentos acústicos), mas também de explorar amplamente o espaço de parâmetros do sintetizador, possibilitando a reprodução de qualquer som arbitrário desejado. A abordagem proposta mostrou-se eficiente para ambos os objetivos: o modelo desenvolvido foi capaz de aproximar amostras de som não vistas anteriormente (de instrumentos reais), e as métricas de erro convergiram para valores satisfatórios mesmo ao utilizar um processo exploratório de geração de dados (um conjunto de dados sintético especificamente construído para explorar as capacidades do sintetizador FM).
+    }{CNN, FM Synthesis, Re-Synthesis, Music Computing, Neural Networks}
 
 
 % resumo em INGLÊS
 % conter no máximo 500 palavras
 % conter no mínimo 1 e no máximo 5 palavras-chave
 \textoresumo[english]{
-    This paper is a brief model for writing qualification monographs, dissertations and thesis using \LaTeX environment, in accordance with the standards required by the Institute of Science and Technology (ICT) at the Federal University of São Paulo (UNIFESP). For making this model, the latest version (1.9.6) \textit{abnTeX2} classes package was used. This package follow the rules of the Brazilian Association of Technical Standards. A drafting a monograph, dissertation or thesis can be done by overwriting the contents of this model.
-    }{Template, Qualification monograph, Dissertation, Thesis, Latex}
+    FM synthesis is one of the most renowned techniques for sound synthesis, and although it is an old method, it remains widely used today. It is simple, computationally inexpensive, and capable of producing high-quality results. However, the successful use of this type of audio synthesis presents a significant challenge: selecting the correct parameters for the synthesizer. This process is not precise, and there is no fully deterministic procedure to follow. Musicians are usually guided by intuition and an empirical trial-and-error process. To revive this technique and leverage its benefits, the use of CNN models appears to be a very promising option, as they can help musicians achieve convincing results, imitating real instruments in a short time and at a low cost, or even creating totally unpredictable timbres and effects. Therefore, this work explores this approach by creating a pipeline capable not only of training a CNN model to predict the appropriate parameters that enable an FM synthesizer to resynthesize original audio samples (such as acoustic instruments), but also of exploring the synthesizer’s parameter space broadly, allowing it to reproduce any arbitrary desired sound. The proposed approach proved to be efficient for both objectives: the developed model was able to approximate unseen sound samples (of real instruments), and the error metrics converged to satisfactory values even when using an exploratory dataset generation process (a synthetic dataset specifically constructed to explore the FM synthesizer’s capabilities).
+    }{CNN, Síntese FM, Re-Síntese, Computação Musical, Redes Neurais}
 
 
 % ----------------------------------------------------------
@@ -112,6 +112,10 @@
 % ELEMENTOS TEXTUAIS
 % ----------------------------------------------------------
 \textual
+
+\chapter{Introduction}
+\label{chapter:introduction}
+\input{tex/introduction}
 
 \chapter{Theoretical Basis}
 \label{chapter:theoretical_basis}
