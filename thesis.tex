@@ -15,7 +15,7 @@
 %   Curso                 = doutorado/mestrado
 %   Situação do trabalho  = pre-defesa/pos-defesa (exceto para qualificação)
 %   Versão para impressão = impressao
-\documentclass[qualificacao, pos-defesa]{packages/icmc}
+\documentclass[qualificacao, mestrado, pre-defesa]{packages/icmc}
 
 % ---------------------------------------------------------------------------
 % Pacotes Opcionais
@@ -29,6 +29,7 @@
 
 \usepackage{xcolor}
 \newcommand{\basg}[1]{{\color{blue}[#1]}}
+\providecommand{\textcite}[1]{\citeonline{#1}}
 
 % ---------------------------------------------------------------------------
 
@@ -117,6 +118,10 @@
 \label{chapter:introduction}
 \input{tex/introduction}
 
+\chapter{Related Works}
+\label{chapter:related_works}
+\input{tex/related_works}
+
 \chapter{Theoretical Basis}
 \label{chapter:theoretical_basis}
 \input{tex/theoretical_basis}
@@ -128,6 +133,10 @@
 \chapter{Experimental Results and Discussion}
 \label{chapter:experimental_results}
 \input{tex/experimental_results}
+
+\chapter{Conclusion}
+\label{chapter:conclusion}
+\input{tex/conclusion}
 
 
 % \chapter{Introdução}
@@ -202,7 +211,7 @@
 %     \chapter{Documento básico usando a classe \textit{icmc}}
 %     \label{chapter:documento-basico}
 %     \input{tex/appendix/documento-basico}
-    
+
 %     \chapter{Configuração do programa JabRef}
 %     \label{chapter:configuracao-jabref}
 %     \input{tex/appendix/configuracao-jabref}
@@ -220,7 +229,7 @@
 % ---
 \begin{anexosenv}
 
-    \chapter{Conducted Experiments} 
+    \chapter{Conducted Experiments}
     \label{chapter:experiments}
     \input{tex/annex/experiments}
 
