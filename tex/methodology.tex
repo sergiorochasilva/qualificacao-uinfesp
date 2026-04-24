@@ -22,6 +22,8 @@ All experiments were conducted using Python 3.11.2, TensorFlow 2.19.0, Keras 3.1
 
 There are several commercial FM synthesizers with hundreds or thousands of parameters. However, this work focuses on a research-oriented, controllable baseline. Therefore, a deliberately simple synthesizer was implemented to validate the overall pipeline.
 
+Commercial instruments can expose extremely large parameter spaces. For example, Native Instruments' FM8 can use around 1,000 parameters, while the Teenage Engineering OP-1 has been described as reaching up to $10^{76}$ possible parameter combinations \cite{claesson2021resynthesis}. These figures reinforce why a simplified synthesizer is useful in this study: it keeps the experimentation tractable while still exercising the main FM synthesis concepts.
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.9\linewidth]{../images/first_part.png}

@@ -1,15 +1,14 @@
-
-During the development of this work, many experiments were conducted before reaching the main objective. To provide a better understanding of the chosen approach and to contribute to future research by highlighting different methods and their outcomes, a summary of each experiment and its corresponding results is presented below.
+During the development of this work, several preliminary experiments were conducted before the final architecture was selected. This appendix summarizes the main configurations that were tried and the behavior observed in each case, so the progression toward the final model remains explicit.
 
 \section{Experiment 1}
 
-Use of a Multilayer Neural Network to analyze the audio input (in the time domain) and estimate the corresponding FM synthesis parameters in order to resynthesize the audio. Main highlights:
+The first attempt used a multilayer neural network to analyze the audio input in the time domain and estimate the corresponding FM synthesis parameters for resynthesis. The main characteristics were:
 
 \begin{enumerate}
-\item 1000 audio input samples (each 3 seconds long).
-\item Each audio input was split into frames of 2048 samples (resulting in 43 frames per audio sample).
-\item The neural network was divided into two parts: the first acted as a feature extractor (with a time-distributed layer using three deep layers); the second was a regressor, consisting of a more conventional neural network (with tree layers) used to estimate the FM synthesis parameters based on the previously extracted audio features.
-\item The results were poor, and the model suffered from overfitting (despite testing many variations).
+\item 1000 audio input samples, each 3 seconds long.
+\item Each audio input was split into frames of 2048 samples, resulting in 43 frames per audio sample.
+\item The network was divided into two parts: a feature extractor, implemented with a time-distributed layer and three dense layers, and a regressor, implemented with three dense layers to estimate the FM synthesis parameters from the extracted features.
+\item The results were poor, and the model suffered from overfitting despite several tested variations.
 \end{enumerate}
 
 The network architecture is presented below:
@@ -42,13 +41,13 @@ Summary of the evaluation metrics from the training process:
 
 \section{Experiment 2}
 
-Use of a 1D Convolutional Neural Network to extract audio features from the time-domain representation, and to estimate the corresponding FM synthesis parameters using a standard Multilayer Neural Network. Main highlights:
+The second attempt replaced the time-distributed baseline with a 1D Convolutional Neural Network to extract features directly from the waveform and then estimate the FM synthesis parameters with a multilayer regressor. The main characteristics were:
 
 \begin{enumerate}
-\item 1000 audio input samples (each 1 second long, to avoid memory exhaustion).
-\item The audio inputs were not further split into frames.
-\item The neural network was divided into two parts: the first acted as a feature extractor, consisting of three convolutional layers; the second was a regressor, made up of a conventional neural network (with three layers) used to estimate the FM synthesis parameters based on the previously extracted audio features.
-\item The results were better than in previous experiments, but still poor. Moreover, the model suffered from even more intense overfitting (despite testing many variations).
+\item 1000 audio input samples, each 1 second long, to reduce memory usage.
+\item The audio inputs were not split into frames.
+\item The network was divided into two parts: a feature extractor with three convolutional layers, and a regressor with three dense layers to estimate the FM synthesis parameters from the extracted audio features.
+\item The results improved over Experiment 1, but they were still poor. The model also suffered from even stronger overfitting despite several tested variations.
 \end{enumerate}
 
 The network architecture is presented below:
@@ -81,11 +80,11 @@ Summary of the evaluation metrics from the training process:
 
 \section{Experiment 3}
 
-Very similar to the Experiment 2, but, with one convolutional layer less, but adding MaxPooling layers, on the extractor network.
+Experiment 3 was similar to Experiment 2, but with one fewer convolutional layer and MaxPooling layers added to the feature extractor. The main characteristics were:
 
 \begin{enumerate}
-\item 1000 audio input samples (each 1 second long, to avoid memory exhaustion).
-\item The neural network was divided into two parts: the first acted as a feature extractor, consisting of three convolutional layers, plus poolgin layers; the second was a regressor, made up of a conventional neural network (with three layers) used to estimate the FM synthesis parameters based on the previously extracted audio features.
+\item 1000 audio input samples, each 1 second long.
+\item The network was divided into two parts: a feature extractor composed of convolutional and pooling layers, and a regressor composed of three dense layers used to estimate the FM synthesis parameters from the extracted audio features.
 \item The results were similar to the previous experiments.
 \end{enumerate}
 
@@ -119,16 +118,12 @@ Summary of the evaluation metrics from the training process:
 
 \section{Experiment 4}
 
-This experiment is very similar to Experiments 2 and 3, but with two branches of convolutional layers in the feature extraction part of the model.
-
-Here, pooling layers are also used. The main idea is to apply different filters and pooling strategies in each branch, in order to capture distinct features and recognize different frequency patterns in the audio input.
-
-The regression model remains similar to the previous experiments.
+This experiment was similar to Experiments 2 and 3, but it used two branches of convolutional layers in the feature-extraction stage. Pooling layers were also used, with the goal of capturing distinct features and recognizing different frequency patterns in the audio input. The main characteristics were:
 
 \begin{enumerate}
-\item 1000 audio input samples (each 1 second long, to avoid memory exhaustion).
-\item The neural network was divided into two main parts: a feature extractor and a regressor. However, the feature extractor itself was composed of two parallel convolutional branches.
-\item The results were slightly worse than in the previous experiment, but still similar. However, this time, the model did not suffer from overfitting.
+\item 1000 audio input samples, each 1 second long.
+\item The network was divided into two main parts: a feature extractor and a regressor. The feature extractor itself was composed of two parallel convolutional branches.
+\item The results were slightly worse than in the previous experiment, but still similar. This time, however, the model did not suffer from overfitting.
 \end{enumerate}
 
 The network architecture is presented below:
@@ -158,3 +153,5 @@ Summary of the evaluation metrics from the training process:
  \includegraphics[scale=1]{images/experiment4_mae.png}
  \fdireta{usp:logo}
 \end{figure}
+
+These preliminary experiments show the evolution from a dense time-distributed baseline to a 1D CNN with pooling and, finally, to a multi-branch extractor. The last configuration helped guide the final design adopted in the thesis.
