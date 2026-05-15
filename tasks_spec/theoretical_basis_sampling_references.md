@@ -48,3 +48,19 @@ Suggested LaTeX:
 ```latex
 Subtractive synthesis starts from a harmonically rich waveform and shapes it by filtering and modulation~\cite{luke2021computermusicsynthesis}.
 ```
+
+## 4. ADSR envelope
+
+Sean Luke, *Computational Music Synthesis*, first edition, 2021.
+
+Free text: https://people.cs.gmu.edu/~sean/book/synthesis/
+
+Why it fits:
+- This free text has a specific ADSR section in the modulation chapter.
+- It explains the attack, decay, sustain, and release stages in a way that matches your paragraph.
+- It is openly accessible and consistent with the other synthesis references in this project.
+
+Suggested LaTeX:
+```latex
+An ADSR envelope is a multiplicative amplitude function commonly used to shape the temporal evolution of a synthesized sound~\cite{luke2021synthesis}.
+```
