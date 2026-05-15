@@ -9,13 +9,13 @@ Musical computation is a broad and interdisciplinary field that encompasses all 
 Audio is a mechanical compression wave that travels through the air. This type of wave can be converted into an electrical signal through microphones, which consist of an arrangement of coils and magnets. As a wave, its main elements are:
 
 \begin{itemize}
-\item Pitch: The fundamental frequency of a sound, which determines whether it is low or high. The higher the frequency, the higher the pitch.
-\item Duration: The length of time a sound is sustained and can be heard.
-\item Loudness (or amplitude): The intensity or energy level of a sound. In terms of a wave, it corresponds to the amplitude of the sound wave.
-\item Timbre: Like the color of a visual object, timbre refers to the quality or "color" of a sound. This aspect will be treated in more detail in the next section.
+    \item Pitch: The fundamental frequency of a sound, which determines whether it is low or high. The higher the frequency, the higher the pitch.
+    \item Duration: The length of time a sound is sustained and can be heard.
+    \item Loudness (or amplitude): The intensity or energy level of a sound. In terms of a wave, it corresponds to the amplitude of the sound wave.
+    \item Timbre: Like the color of a visual object, timbre refers to the quality or "color" of a sound. This aspect will be treated in more detail in the next section.
 \end{itemize}
 
-It is important to highlight that although sound can be described in terms of the aspects mentioned above, hearing is mainly a cognitive process. Therefore, sound comparison cannot be fully addressed by mathematical tools, leaving a significant space for perceptual comparison and classification (not to mention aspects related to personal preferences).
+It is important to highlight that although sound can be described in terms of the aspects mentioned above, hearing is mainly a cognitive process. Therefore, sound comparison cannot be fully addressed by mathematical tools, leaving a significant space for perceptual comparison and classification (not to mention aspects related to personal preferences). [TODO - Add reference]
 
 \subsubsection{Sound timbre}
 
@@ -47,23 +47,21 @@ As the figures show, there is a main frequency that defines the pitch of the sou
 
 \subsection{Audio digitalization}
 
-A microphone converts a pressure wave into an electrical waveform. However, in computational music, the audio signal must be discretized to be represented as a digital audio file. The primary process for digital audio representation is sampling.
+A microphone can convert a pressure wave into an electrical waveform. However, in computational music, the audio signal must be discretized to be represented as a digital audio file. The primary process for digital audio representation is sampling.
 
-Sampling consists of recording a sequence of wave amplitudes at fixed intervals. For example, if a sound is recorded using a sampling rate of 22,100 Hz, it means that the computer will capture 22,100 audio samples per second.
+Sampling consists of recording a sequence of wave amplitudes at fixed intervals. For example, if a sound is recorded using a sampling rate of 22,100 Hz, it means that the computer will capture 22,100 audio samples per second (one sample every $4.524886 \times 10^{-5}$ seconds).
 
 \begin{figure}[htb]
- \caption{Signal sampling}
- \label{fig:signal_sampling}
- \centering
- \includegraphics[scale=0.2]{images/signal_sampling.png}
- \fdireta{usp:logo}
+    \caption{Signal sampling}
+    \label{fig:signal_sampling}
+    \centering
+    \includegraphics[scale=0.2]{images/signal_sampling.png}
+    \fdireta{usp:logo}
 \end{figure}
 
-This approach is very efficient because human hearing can detect frequencies between 20 Hz and 20,000 Hz. However, for most musical sounds, the maximum frequency is typically below 10 kHz (in fact, even a violin—one of the highest-pitched instruments—reaches only around 3,500 Hz). And according to the Nyquist-Shannon Theorem, to properly sample a periodic signal, the sampling rate must be at least twice the frequency of the highest component of the signal.
+This approach is very efficient because human hearing can detect frequencies between 20 Hz and 20,000 Hz. However, for most musical sounds, the maximum frequency is typically below 10 kHz (in fact, even a violin, wich is one of the highest-pitched instruments, reaches only around 3,500 Hz). And according to the Nyquist-Shannon Theorem, to properly sample a periodic signal, the sampling rate must be at least twice the frequency of the highest component of the signal. [TODO - Add reference]
 
-Thus, 22,100 Hz can be a good sampling rate for recording music while saving disk space. However, if the goal is to cover the full range of human hearing, higher rates, such as 44,200 Hz, can also be used.
-
-Note that with this process, all sound elements highlighted before, can be recorded and reprocedure later.
+Thus, 22,100 Hz can be a good sampling rate for recording music while saving disk space. However, if the goal is to cover the full range of human hearing, higher rates, such as 44,200 Hz, can also be used. But note that with this process, all sound elements highlighted before, can be recorded and reprocedure later.
 
 \subsection{Sound synthesis}
 
@@ -72,20 +70,20 @@ After the development of sound recording techniques, musical computation evolved
 In summary, audio synthesis techniques can be divided into three basic types:
 
 \begin{itemize}
-\item \textbf{Additive synthesis:} Perhaps the most straightforward idea from a mathematical point of view. It consists of generating each frequency component of a desired timbre separately and then summing them. In fact, it is more like a weighted sum, since each component is weighted according to its contribution to the timbre. A normalization step is commonly applied after the process to avoid amplitude overload.
+    \item \textbf{Additive synthesis:} Perhaps the most straightforward idea from a mathematical point of view. It consists of generating each frequency component of a desired timbre separately and then summing them. In fact, it is more like a weighted sum, since each component is weighted according to its contribution to the timbre. A normalization step is commonly applied after the process to avoid amplitude overload. [TODO - Add reference]
 
-\item \textbf{Subtractive synthesis:} The opposite of the previous technique, but historically more common due to its effectivenessa and lower cost. In short, it consists of taking a complex waveform, rich in harmonics, and applying various filters to obtain the desired sound. It is more empirical than additive synthesis (which is based on spectral analysis), but simpler to implement and less computationally intensive. Typically, the original waveforms are complex ones such as the sawtooth wave, square wave, or triangular wave.
+    \item \textbf{Subtractive synthesis:} The opposite of the previous technique, but historically more common due to its effectiveness and lower cost. In short, it consists of taking a complex waveform, rich in harmonics, and applying various filters to obtain the desired sound. It is more empirical than additive synthesis (which is based on spectral analysis), but simpler to implement and less computationally intensive. Typically, the original waveforms are complex ones such as the sawtooth wave, square wave, or triangular wave. [TODO - Add reference]
 
-\item \textbf{FM synthesis:} Another empirical approach to sound synthesis, which will be addressed in detail in a later section. In short, it consists of altering a simple waveform by applying a high-frequency modulation, not to the generated waveform itself, but directly to the frequency parameter of the carrier oscillator. This kind of distortion of the base frequency produces mirrored harmonics that enrich the timbre of the sound. It is up to the musician to choose the appropriate parameters to produce the desired timbre.
+    \item \textbf{FM synthesis:} Another empirical approach to sound synthesis, which will be addressed in detail in a later section. In short, it consists of altering a simple waveform by applying a high-frequency modulation, not to the generated waveform itself, but directly to the frequency parameter of the carrier oscillator. This kind of distortion of the base frequency produces mirrored harmonics that enrich the timbre of the sound. It is up to the musician to choose the appropriate parameters to produce the desired timbre.
 \end{itemize}
 
 There are many other techniques that could be mentioned; however, these three represent the most direct forms of synthesis, or the most purely mathematical ones, in the sense that they do not require manipulation of pre-recorded audio.
 
 \subsubsection{ADSR Audio envelop}
 
-Another important technique for achieving good results is the so-called “Attack, Decay, Sustain, and Release (ADSR) envelope”, which consists of applying a multiplicative function to the waveform, altering only its amplitude.
+Another important technique for achieving good results is the so-called “Attack, Decay, Sustain, and Release envelope” (ADSR(ADSR envelop), which consists of applying a multiplicative function to the waveform, altering only its amplitude.
 
-The basic idea is to control the sound intensity by simulating the natural behavior of acoustic sounds. Typically, an ADSR envelope is defined as a function with a domain between 0 and 1, which is applied to the generated waveform:
+The basic idea is to control the sound intensity by simulating the natural behavior of acoustic sounds energy vanishing. Typically, an ADSR envelope is defined as a function with a domain between 0 and 1, which is applied to the generated waveform:
 
 \begin{figure}[h]
     \centering
@@ -97,15 +95,15 @@ The basic idea is to control the sound intensity by simulating the natural behav
 The ADSR envelope can be understood as an amplitude function:
 
 \[
-y(t) = e(t) \cdot s(t)
+    y(t) = e(t) \cdot s(t)
 \]
 
 Where:
 
 \begin{itemize}
-\item \( s(t) \): the raw generated sound wave.
-\item \( e(t) \): the ADSR envelope function (normalized amplitude ranging from 0 to 1).
-\item \( y(t) \): the resulting sound.
+    \item \( s(t) \): the raw generated sound wave.
+    \item \( e(t) \): the ADSR envelope function (normalized amplitude ranging from 0 to 1).
+    \item \( y(t) \): the resulting sound.
 \end{itemize}
 
 Although real audio samples can show a wide variation of envelope behaviors, it is common practice to use a linear function to achieve the goal, since the human ear is more sensitive to abrupt changes and to relative differences. However, for long time variations, the ear can still perceive the change, which is why some synthesizers allow the use of exponential or logarithmic functions as well.
@@ -123,17 +121,17 @@ As Chowning himself pointed out in his paper, when the technique is applied to v
 In summary, considering only two oscillators: the main one, called the carrier, and the modulator, so the instantaneous frequency of the output audio can be expressed by the following function:
 
 \[
-f(t) = f_c + I \cdot \sin(2\pi f_m t)
+    f(t) = f_c + I \cdot \sin(2\pi f_m t)
 \]
 
 Where:
 
 \begin{itemize}
-\item \( f(t) \): the instantaneous frequency of the generated sound wave.
-\item \( f_c \): the original frequency of the carrier wave.
-\item \( I \): the modulation index, which defines the intensity of the modulation (the greater the value, the more harmonics are generated).
-\item \( f_m \): the frequency of the modulator wave (which determines the spacing of the harmonics).
-\item \( t \): the time variable.
+    \item \( f(t) \): the instantaneous frequency of the generated sound wave.
+    \item \( f_c \): the original frequency of the carrier wave.
+    \item \( I \): the modulation index, which defines the intensity of the modulation (the greater the value, the more harmonics are generated).
+    \item \( f_m \): the frequency of the modulator wave (which determines the spacing of the harmonics).
+    \item \( t \): the time variable.
 \end{itemize}
 
 The most important point, however, is that this simple manipulation results in symmetric sidebands around the carrier frequency, spaced at multiples of \( f_m \).
@@ -141,7 +139,7 @@ The most important point, however, is that this simple manipulation results in s
 For a more intuitive understanding, if a carrier frequency \( f_m \) is modulated by a frequency \( f_m \), the resulting spectrum will contain:
 
 \[
-f_c \pm n f_m
+    f_c \pm n f_m
 \]
 
 For example, by choosing \( f_c = 440 \) and \( f_m = 220 \), the resulting wave will contain frequency components such as 220 Hz, 440 Hz, 660 Hz, 880 Hz, and so on, with decreasing amplitudes (the amplitudes follow the Bessel coefficients, but this discussion is beyond the scope of this article).
@@ -182,7 +180,7 @@ The key difference from the linear scale is that, as the values on the scale inc
 In fact, the Mel scale maps linear frequencies onto a logarithmic scale. A frequency \( f \) s converted to the Mel scale through the following formula:
 
 \[
-\text{Mel}(f) = 2595 \log_{10} \left( 1 + \frac{f}{700} \right)
+    \text{Mel}(f) = 2595 \log_{10} \left( 1 + \frac{f}{700} \right)
 \]
 
 For a better understanding of this conversion, consider the following graph, which compares the linear hertz scale with the Mel scale:
@@ -211,7 +209,7 @@ In artifical inteligence, learning is commonly formalized as performance improve
 The earliest models of artificial neurons were inspired by biological neurons, beginning with the work of McCulloch and Pitts \cite{mcculloch1943}. The perceptron later provided a practical learning rule for this model \cite{rosenblatt1958}. Mathematically, a neuron computes a weighted sum of its inputs and applies a non-linear activation function:
 
 \[
-y = \phi\left(\sum_{i=1}^{n} w_i x_i + b\right)
+    y = \phi\left(\sum_{i=1}^{n} w_i x_i + b\right)
 \]
 
 where \( x_i \) are inputs, \( w_i \) are trainable weights, \( b \) is a bias term, and \( \phi(\cdot) \) is the activation function.
@@ -231,19 +229,19 @@ By combining multiple neurons into layered structures, neural networks can repre
 Training a neural network consists of choosing parameters that minimize a loss function over a dataset. A common choice for regression is the Mean Squared Error (MSE):
 
 \[
-\mathcal{L}_{\text{MSE}} = \frac{1}{N} \sum_{i=1}^{N} \left(y_i - \hat{y}_i\right)^2
+    \mathcal{L}_{\text{MSE}} = \frac{1}{N} \sum_{i=1}^{N} \left(y_i - \hat{y}_i\right)^2
 \]
 
 Optimization is typically performed with gradient-based methods. In its simplest form, gradient descent updates the parameters \( \theta \) by moving in the direction of steepest decrease:
 
 \[
-\theta_{t+1} = \theta_t - \eta \nabla_{\theta} \mathcal{L}
+    \theta_{t+1} = \theta_t - \eta \nabla_{\theta} \mathcal{L}
 \]
 
 where \( \eta \) is the learning rate. The computation of gradients in deep networks is made efficient by backpropagation, which applies the chain rule to propagate error signals through the layers \cite{rumelhart1986,goodfellow2016_deep_learning}. For an individual weight \( w_i \), the update takes the form:
 
 \[
-w_i \leftarrow w_i - \eta \frac{\partial \mathcal{L}}{\partial w_i}
+    w_i \leftarrow w_i - \eta \frac{\partial \mathcal{L}}{\partial w_i}
 \]
 
 \begin{figure}[h]
