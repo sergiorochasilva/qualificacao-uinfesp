@@ -114,7 +114,7 @@ As shown in the previous sections, one of the most popular sound synthesis techn
 
 Chowning explored the effects of frequency modulation when applied with high frequencies, close to the audible range, instead of the traditional use of inaudible frequencies.
 
-In fact, the concept of frequency modulation was already well known before this paper; however, it had been used mainly in radio transmission of music or to apply slight distortions through low-frequency oscillators (LFOs), producing effects such as vibrato.
+In fact, the concept of frequency modulation was already well known before this paper; however, it had been used mainly in radio transmission of music or to apply slight distortions through low-frequency oscillators (LFOs), producing effects such as a vibrato.
 
 As Chowning himself pointed out in his paper, when the technique is applied to vary the frequency of the carrier wave through a high-frequency modulator wave, it “results in a surprising control of audio spectra” \cite{chowning1973synthesis}.
 
@@ -136,7 +136,7 @@ Where:
 
 The most important point, however, is that this simple manipulation results in symmetric sidebands around the carrier frequency, spaced at multiples of \( f_m \).
 
-For a more intuitive understanding, if a carrier frequency \( f_m \) is modulated by a frequency \( f_m \), the resulting spectrum will contain:
+For a more intuitive understanding, if a carrier frequency \( f_c \) is modulated by a frequency \( f_m \), the resulting spectrum will contain:
 
 \[
     f_c \pm n f_m
@@ -169,15 +169,15 @@ In fact, according to \cite{claesson2021resynthesis}, FFT-based spectral compari
     \item \textbf{Log-Mel Spectogram Distance:} Similar to the previous metrics, but based on the Log-Mel Spectrogram, which is essentially an adaptation of the FFT spectrum that incorporates human auditory perception. In summary, the Log-Mel Spectrogram is obtained by computing the STFT, mapping the frequencies onto the Mel scale (explained later in this document), and finally projecting the amplitudes onto a logarithmic scale.
 \end{itemize}
 
-In addition to these three metrics, \cite{claesson2021resynthesis} also recommends the use of Euclidean Distance of the Envelope to compare audio envelopes. This approach can be very useful, but since this work is focused on the similarity between original and synthesized audio in terms of timbre, the envelope comparison, while important for real-world applications, falls outside the scope of the present study.
+In addition to these three metrics, \cite{claesson2021resynthesis} also recommends the use of Euclidean Distance of the Envelope to compare audio envelopes. This approach can be very useful, but since this work is focused on the similarity between original and synthesized audio in terms of timbre (focusing on the sustain part of the ADSR), the envelope comparison, while important for real-world applications, will be not considered in the present study.
 
 \subsubsection{Mel-Scale Representation}
 
 The Mel scale was proposed by Stevens, Volkmann, and Newman in 1937 \cite{claesson2021resynthesis}, and its main purpose is to reflect the human perception of frequency.
 
-The key difference from the linear scale is that, as the values on the scale increase, the perceptual difference between two adjacent points becomes smaller.
+The key difference from the linear scale is that, as frequency increases, smaller differences in Hertz become less perceptible \cite{moore_psychoacoustics}.
 
-In fact, the Mel scale maps linear frequencies onto a logarithmic scale. A frequency \( f \) s converted to the Mel scale through the following formula:
+In fact, the Mel scale maps linear frequencies onto a logarithmic scale. A frequency \( f \) is converted to the Mel scale through the following formula:
 
 \[
     \text{Mel}(f) = 2595 \log_{10} \left( 1 + \frac{f}{700} \right)
@@ -244,6 +244,8 @@ where \( \eta \) is the learning rate. The computation of gradients in deep netw
     w_i \leftarrow w_i - \eta \frac{\partial \mathcal{L}}{\partial w_i}
 \]
 
+To a more intuitive understanding, during the learning process, the weights are updated in a way that implies the loss function goes, interatively, to a local or global minimum. And the figure \ref{fig:nn_gradient_descent} illustrates this intuition.
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=\linewidth]{../images/nn_gradient_intuition.png}
@@ -279,7 +281,7 @@ Convolutional layers use the same set of filter parameters across all spatial lo
 
 \subsection{Pooling and invariance}
 
-Pooling layers introduce a controlled form of invariance by aggregating values within small neighborhoods. In practice, pooling reduces the spatial resolution while emphasizing the most salient responses, which helps the model become less sensitive to small translations. The most common variant is max pooling, though average pooling and related strategies are also used \cite{gfg_pooling2025}.
+Pooling layers introduce a controlled form of invariance by aggregating values within small neighborhoods. In practice, pooling reduces the spatial resolution while emphasizing the most salient responses, which helps the model become less sensitive to small translations. The most common type is max pooling, though average pooling and related strategies are also used \cite{gfg_pooling2025}.
 
 \begin{figure}[h]
     \centering
