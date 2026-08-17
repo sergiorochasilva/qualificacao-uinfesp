@@ -194,7 +194,7 @@ For a better understanding of this conversion, consider the following graph, whi
 
 It is a very useful metric for audio comparison, as it takes into account the human auditory perception of frequency.
 
-\section{Artificial Neural Networks and Learning}
+\section{Machine Learning}
 
 \subsection{From algorithmic programming to learning}
 
@@ -203,6 +203,53 @@ Traditional programming is effective when a task can be explicitly described as 
 \subsection{Learning as performance improvement}
 
 In artifical inteligence, learning is commonly formalized as performance improvement through experience. A program is said to learn from experience \( E \) with respect to a task \( T \) and a performance measure \( P \) if its performance on \( T \), as measured by \( P \), improves with \( E \) \cite{mitchell1997_machine_learning}. This definition shifts the focus from explicit algorithms to measurable improvement driven by data.
+
+---
+In practical terms, the core idea depends on two main factors:
+\begin{itemize}
+    \item Problem modeling, which consists of representing the task \( T \) in a way that permits mathematical manipulation to improve the performance measure \( P \) or, more commonly, to reduce an error measure, which is the inverse of the performance measure \( P \).
+    \item The learning algorithm, which, in practical terms, consists of a strategy for applying an iterative method to reduce the error measure based on the observed experience \( E \).
+\end{itemize}
+
+In essence, the learning process can be viewed as an optimization problem, allowing the use of a broad range of approaches to represent the data and optimize the error metric.
+
+\subsection{Learning Paradigms}
+
+Traditionally, there are three main learning paradigms: supervised learning, unsupervised learning, and reinforcement learning. They differ primarily in how the error metric is defined, which is the main target of the learning process.
+
+In summary, these paradigms can be presented as follows:
+\begin{itemize}
+    \item \textbf{Supervised learning:} The learning problem is modeled through a dataset that contains both the parameters of the problem and the desired output. The core idea is to design an error metric that measures the deviation between the model's predictions and the desired output. The learning algorithm then iteratively adjusts the model parameters to minimize this error metric.
+    \item \textbf{Unsupervised learning:} In this paradigm, the available data normally do not contain the desired output. The central idea is to learn patterns from the data that organize the information according to similarity criteria. In general terms, the goal is to organize the information according to the structures or relationships within the data itself. In this paradigm, the model is trained on an unlabeled dataset, and the error metric is derived from the model's ability to capture the underlying structure of the data.
+    \item \textbf{Reinforcement learning:} In this third paradigm, the available data also do not contain the desired output, but it is possible to define a rule to evaluate the model's performance based on each output predicted by the model. Furthermore, in such cases, the input data cannot necessarily be understood as a dataset itself, but rather as a dynamic environment with which the model can interact. The core idea is to define a reward function that evaluates the model's performance and can therefore be maximized, or a penalty function that can be minimized, by the learning algorithm.
+\end{itemize}
+
+In general terms, supervised learning is often the most natural approach, since many machine-learning problems consist of finding a way to define the hidden and complex rules that determine how the available input data are related to the desired output.
+
+However, there are many problems in which it is not possible to determine the desired output from the beginning, or even to determine all the real-world situations in which the model should be applied. In such cases, both unsupervised learning and reinforcement learning can be used to discover hidden rules and patterns within the data, allowing these problems to be addressed.
+
+In practical terms, examples of use cases for each paradigm can be presented as follows:
+\begin{itemize}
+    \item \textbf{Supervised learning:} Prediction of numerical or categorical values based on available input data, such as historical data (e.g., stock prices, weather conditions, and customer behavior). This approach also applies to more complex problems in which the input data are complex structures, such as images, audio, or text, provided that the desired output can be defined and a dataset with labeled examples can be constructed.
+    \item \textbf{Unsupervised learning:} Organizing input data into groups or clusters, which can be used to profile the data (e.g., customer segmentation and the detection of user preferences) or to find outliers that can be used to automatically detect anomalies.
+    \item \textbf{Reinforcement learning:} Situations in which neither a complete dataset nor the desired output can be clearly defined, but there is a clear rule to evaluate the model's performance and, therefore, to define a reward function (or penalty function). It is typically useful when the model must interact with an environment and learn from the feedback received through this interaction, as in game playing, robotic control, and autonomous driving.
+\end{itemize}
+
+As can be seen from these examples, unsupervised learning faces the main challenge of understanding the meaning of each produced cluster. Reinforcement learning faces two main challenges: ensuring that the model is exposed to all relevant situations and optimizing the training interaction loop. Since the model must be trained by interacting with the environment, this can be a slow process.
+
+\subsection{Learning problems types}
+
+Classification and regression are two fundamental types of supervised learning problems, each with distinct characteristics and applications.
+
+In unsupervised learning, common tasks include clustering and dimensionality reduction.
+
+\subsection{Knowledge representation}
+
+\subsection{Error metrics and loss functions}
+
+---
+
+\section{Artificial Neural Networks and Learning}
 
 \subsection{Artificial neuron model}
 
