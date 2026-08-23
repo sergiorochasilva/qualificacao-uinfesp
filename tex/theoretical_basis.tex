@@ -235,13 +235,66 @@ In practical terms, examples of use cases for each paradigm can be presented as 
     \item \textbf{Reinforcement learning:} Situations in which neither a complete dataset nor the desired output can be clearly defined, but there is a clear rule to evaluate the model's performance and, therefore, to define a reward function (or penalty function). It is typically useful when the model must interact with an environment and learn from the feedback received through this interaction, as in game playing, robotic control, and autonomous driving.
 \end{itemize}
 
-As can be seen from these examples, unsupervised learning faces the main challenge of understanding the meaning of each produced cluster. Reinforcement learning faces two main challenges: ensuring that the model is exposed to all relevant situations and optimizing the training interaction loop. Since the model must be trained by interacting with the environment, this can be a slow process.
+As can be seen from these examples, unsupervised learning faces the main challenge of understanding the meaning of each produced cluster, while reinforcement learning faces two main challenges: ensuring that the model is exposed to all relevant situations, and optimizing the training interaction loop (since the model must be trained by interacting with the environment, this can be a slow process).
 
-\subsection{Learning problems types}
+\subsection{Types of Learning Problems}
 
-Classification and regression are two fundamental types of supervised learning problems, each with distinct characteristics and applications.
+Traditionally, learning problems can be divided into three main types: classification, regression, and clustering, each with its own characteristics and applications.
+
+\subsubsection{Regression}
+
+Regression problems consist of predicting a numerical value for a target variable based on patterns learned from the input data.
+
+This type of learning problem is directly related to a broad range of statistical techniques developed throughout history and used to predict a given metric with a certain confidence level.
+
+In traditional statistical methods, the developed model normally represents the probability distribution of the target measure while considering a set of related variables. The prediction consists of identifying the most appropriate probability model and extrapolating from known data to obtain the best prediction for unknown data.
+
+This type of approach has been successfully applied in a wide range of situations, such as meteorology, economics, and business intelligence. It remains widely used because it can be simple and effective and does not always require a large amount of data.
+
+However, the main limitations of purely statistical methods are:
+\begin{itemize}
+    \item The difficulty of identifying the appropriate relationships between the available data and the desired measure; that is, of selecting the appropriate probability-distribution model and set of related variables.
+    \item The difficulty of effectively handling a large set of related variables.
+    \item The difficulty of understanding the complex correlations among variables and the real patterns hidden in the data, which becomes more challenging as the number of considered variables increases.
+\end{itemize}
+
+Considering these difficulties and the numerous situations in which statistical predictions can provide support, machine-learning regression techniques have grown rapidly because they offer an effective way to automatically:
+
+\begin{itemize}
+    \item Learn the relationships within the data and discover hidden patterns.
+    \item Construct probability-distribution models that fit the available data, allowing confidence intervals to be accurately estimated.
+    \item Handle a wide range of variables and data without handcrafted data manipulation.
+\end{itemize}
+
+More specifically, regression consists of applying a machine-learning method to fit the data and predict a target numerical value that is related to the other variables in the dataset; that is, a value for which a statistical correlation with the other variables exists.
+
+Regression methods provide not only an estimate for a target value but also a confidence interval, based on the assumption that the selected model adequately fits the available data. This assumption can also be satisfactorily evaluated.
+
+As explained above, although regression underpins many machine-learning techniques, it is more closely associated with supervised-learning approaches, since the target variable is often part of a collected historical dataset.
+
+// TODO Add examples
+
+\subsubsection{Classification}
+
+Classification problems consist of identifying the most appropriate category, class, or label for an item based on patterns learned from the input data.
+
+Typically, a large amount of labeled historical information is available, and the goal is to automatically identify the appropriate label for a new, unknown item while assessing the confidence of this prediction.
+
+As can be understood from the preceding discussion, classification problems are normally supervised-learning problems, since learning is based on a historical labeled dataset; however, they are not limited to this approach.
+
+Examples of classification problems include character recognition, sentiment analysis, given a predefined set of acceptable sentiments, medical diagnosis, in which the most appropriate disease is selected from a set of possibilities, and the identification of musical notes or instruments from audio samples. More generally, classification applies to any problem that consists of selecting the appropriate category for a non-numerical variable in a dataset.
+
+As will be explained in the next sections, classification problems normally involve selecting the appropriate class based on an empirically defined confidence threshold applied to a numerical probability distribution produced by the model. In this sense, classification problems are normally solved in a similar way to regression problems, but with a final step that selects the appropriate class based on a probability distribution.
+
+
+
 
 In unsupervised learning, common tasks include clustering and dimensionality reduction.
+
+and in reinforcement learning, the focus is on sequential decision-making problems, where an agent learns to make a series of decisions to maximize cumulative rewards.
+
+
+
 
 \subsection{Knowledge representation}
 
